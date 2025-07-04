@@ -16,7 +16,7 @@ const PostCard = () => {
           </p>
           <div className="flex items-center space-x-6 mt-4 text-gray-500 text-sm">
             {/* Tarih */}
-            <time className="whitespace-nowrap">· Jul 3</time>
+            <time className="whitespace-nowrap">Jul 3</time>
 
             {/* Alkış Butonu */}
             <button
