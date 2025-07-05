@@ -1,4 +1,4 @@
-// Dosya adı ile import edilmiş resmi eşle
+  
 
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ type Post = {
   date: string;
   likes: number;
   image: string;
-  
+  categories: string[];
 };
 
 type Props = {

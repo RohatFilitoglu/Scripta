@@ -1,19 +1,15 @@
-import { useNavigate } from "react-router-dom";
 import profile from "../assets/image/profile.jpg";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const navigate = useNavigate();
 
-  const handleSignInClick = () => {
-    navigate("/signin");
-  };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center space-x-6">
-            <a href="/" className="text-2xl font-bold text-gray-900">
+            <a href="/" className="text-2xl font-bold text-gray-900"  style={{ fontFamily: "'Pacifico', cursive" }}>
               Scripta
             </a>
 
@@ -59,14 +55,13 @@ const Navbar = () => {
               </svg>
               Write
             </button>
-
-            {/* Sign In butonuna tıklayınca yönlendirme */}
-            <button
-              onClick={handleSignInClick}
-              className="text-sm text-black hover:text-white hover:bg-black px-4 py-2 rounded-full transition duration-200 border border-gray-300 cursor-pointer"
-            >
-              Sign In
-            </button>
+            <nav>
+              <Link to="/signin">
+                <button className="text-sm text-black hover:text-white hover:bg-black px-4 py-2 rounded-full transition duration-200 border border-gray-300 cursor-pointer">
+                  Sign In
+                </button>
+              </Link>
+            </nav>
 
             <div>
               <img

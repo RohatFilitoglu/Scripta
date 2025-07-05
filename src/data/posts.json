@@ -321,10 +321,12 @@
      "id": 32,
      "author": "Rohat Filitoğlu",
      "title": "SQL Komutlarının Analizi: Veritabanı Yönetiminin Temelleri",
-     "excerpt": "Bu yazıda JSONPlaceholder API ile nasıl veri çekeceğimizi ve bunu React ile nasıl göstereceğimizi adım adım inceleyeceğiz...",
+     "excerpt": "Günümüz dijital dünyasında veri, organizasyonların en değerli varlıklarından biridir ancak veriyi depolamak tek başına yeterli değildir; asıl önemli olan, o veriye doğru ve hızlı şekilde ulaşabilmektir. İşte tam da bu noktada SQL komutları devreye girer.",
      "date": "Jul 3",
      "likes": 123,
-     "image": "software.jpeg"
+     "image": "software.jpeg",
+      "category": "Data Science"
+
     },
     {
       "id": 33,
