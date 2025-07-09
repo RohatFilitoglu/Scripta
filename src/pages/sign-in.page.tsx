@@ -1,6 +1,17 @@
+import { Link } from "react-router-dom"
+
 const SignIn = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
+        <div className="flex items-center space-x-6 mb-20">
+            <Link
+              to="/"
+              className="text-5xl text-gray-900 font-bold"
+              style={{ fontFamily: "'Pacifico', cursive" }}
+            >
+              Scripta
+            </Link>
+        </div>
       <form className="max-w-md w-full space-y-8 bg-white border border-gray-200 rounded-lg shadow-sm p-8">
         <h1 className="text-3xl font-semibold text-gray-900 text-center">
           Sign In

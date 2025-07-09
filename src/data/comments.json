@@ -1,0 +1,324 @@
+[
+  {
+    "id": "1",
+    "postId": 3,
+    "userId": 5,
+    "author": "Ahmet Yıldız",
+    "content": "Harika bir yazı olmuş, teşekkürler!",
+    "date": "2025-07-01"
+  },
+  {
+    "id": "2",
+    "postId": 7,
+    "userId": 8,
+    "author": "Zeynep Kaya",
+    "content": "Bu konuda daha fazla yazı bekliyorum.",
+    "date": "2025-07-02"
+  },
+  {
+    "id": "3",
+    "postId": 3,
+    "userId": 2,
+    "author": "Mehmet Arslan",
+    "content": "Aynı fikirdeyim, çok bilgilendirici.",
+    "date": "2025-07-02"
+  },
+  {
+    "id": "4",
+    "postId": 32,
+    "userId": 9,
+    "author": "Elif Demir",
+    "content": "Güzel anlatım, emeğinize sağlık.",
+    "date": "2025-07-03"
+  },
+  {
+    "id": "5",
+    "postId": 21,
+    "userId": 3,
+    "author": "Kemal Çelik",
+    "content": "Birkaç yerde daha detay olabilirdi.",
+    "date": "2025-07-03"
+  },
+  {
+    "id": "6",
+    "postId": 32,
+    "userId": 1,
+    "author": "Deniz Şahin",
+    "content": "Çok güzel derlenmiş, teşekkürler.",
+    "date": "2025-07-04"
+  },
+  {
+    "id": "7",
+    "postId": 12,
+    "userId": 6,
+    "author": "Canan Uçar",
+    "content": "Bu kaynakları nereden bulabilirim?",
+    "date": "2025-07-04"
+  },
+  {
+    "id": "8",
+    "postId": 33,
+    "userId": 4,
+    "author": "Burak Aksoy",
+    "content": "Tartışmaya açık bir konu bence.",
+    "date": "2025-07-05"
+  },
+  {
+    "id": "9",
+    "postId": 5,
+    "userId": 7,
+    "author": "Fatma Korkmaz",
+    "content": "Katılmıyorum ama saygı duyuyorum.",
+    "date": "2025-07-05"
+  },
+  {
+    "id": "10",
+    "postId": 32,
+    "userId": 10,
+    "author": "Selim Toprak",
+    "content": "Gerçekten çok faydalı bir içerik olmuş.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "11",
+    "postId": 38,
+    "userId": 11,
+    "author": "Nazlı Güneş",
+    "content": "Yorumlar kısmı da aktifmiş süper.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "12",
+    "postId": 29,
+    "userId": 12,
+    "author": "Furkan Dede",
+    "content": "Benzer konularda başka yazılar var mı?",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "13",
+    "postId": 1,
+    "userId": 13,
+    "author": "Yasemin Öztürk",
+    "content": "İlk kez böyle bir yazı okuyorum.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "14",
+    "postId": 1,
+    "userId": 14,
+    "author": "Taylan Sönmez",
+    "content": "Ben de benzer şeyler yaşıyorum.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "15",
+    "postId": 40,
+    "userId": 15,
+    "author": "Melis Karaca",
+    "content": "Paylaştığınız için teşekkürler.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "16",
+    "postId": 3,
+    "userId": 16,
+    "author": "Baran Akın",
+    "content": "Çok net bir anlatım olmuş.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "17",
+    "postId": 9,
+    "userId": 17,
+    "author": "Gizem Polat",
+    "content": "Eksik noktalar var ama genel olarak güzel.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "18",
+    "postId": 18,
+    "userId": 18,
+    "author": "Serhat Uysal",
+    "content": "Görseller de ekleseydiniz süper olurdu.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "19",
+    "postId": 12,
+    "userId": 19,
+    "author": "Meryem Altun",
+    "content": "Tüm yazılarınızı okudum, bu en iyisi.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "20",
+    "postId": 12,
+    "userId": 20,
+    "author": "Ömer Gök",
+    "content": "Devamını sabırsızlıkla bekliyorum.",
+    "date": "2025-07-06"
+  },
+
+  {
+    "id": "21",
+    "postId": 34,
+    "userId": 31,
+    "author": "Berkay Yılmaz",
+    "content": "Çok etkileyici bir yazı olmuş.",
+    "date": "2025-07-07"
+  },
+  {
+    "id": "22",
+    "postId": 33,
+    "userId": 32,
+    "author": "Sena Aydın",
+    "content": "Bu konu hakkında düşüncelerim değişti.",
+    "date": "2025-07-07"
+  },
+  {
+    "id": "23",
+    "postId": 31,
+    "userId": 33,
+    "author": "Umut Karaca",
+    "content": "Bilgilendirici ve akıcıydı.",
+    "date": "2025-07-01"
+  },
+  {
+    "id": "24",
+    "postId": 33,
+    "userId": 34,
+    "author": "Büşra Eren",
+    "content": "Bu tarz içerikler daha çok gelsin lütfen.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "25",
+    "postId": 35,
+    "userId": 35,
+    "author": "Yunus Sarı",
+    "content": "Kaynakça da eklense mükemmel olurdu.",
+    "date": "2025-07-04"
+  },
+  {
+    "id": "26",
+    "postId": 31,
+    "userId": 36,
+    "author": "Sevgi Duman",
+    "content": "Daha önce hiç böyle düşünmemiştim.",
+    "date": "2025-07-01"
+  },
+  {
+    "id": "27",
+    "postId": 10,
+    "userId": 37,
+    "author": "Ali Rıza",
+    "content": "Yazı dili çok sade ve anlaşılır.",
+    "date": "2025-07-03"
+  },
+  {
+    "id": "28",
+    "postId": 40,
+    "userId": 38,
+    "author": "Gamze Yavuz",
+    "content": "Harika örneklerle desteklenmiş.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "29",
+    "postId": 23,
+    "userId": 39,
+    "author": "Özgür Tekin",
+    "content": "Benim için çok faydalı oldu.",
+    "date": "2025-07-05"
+  },
+  {
+    "id": "30",
+    "postId": 30,
+    "userId": 40,
+    "author": "Hilal Aslan",
+    "content": "Eline sağlık, devamını bekliyorum.",
+    "date": "2025-07-02"
+  },
+  {
+    "id": "31",
+    "postId": 33,
+    "userId": 41,
+    "author": "Cem Güler",
+    "content": "Okurken çok keyif aldım.",
+    "date": "2025-07-02"
+  },
+  {
+    "id": "32",
+    "postId": 1,
+    "userId": 42,
+    "author": "İrem Öz",
+    "content": "Yazının başlığı çok dikkat çekiciydi.",
+    "date": "2025-07-04"
+  },
+  {
+    "id": "33",
+    "postId": 40,
+    "userId": 43,
+    "author": "Tolga Doğan",
+    "content": "Tam da aradığım konuydu.",
+    "date": "2025-07-02"
+  },
+  {
+    "id": "34",
+    "postId": 13,
+    "userId": 44,
+    "author": "Ece Kurt",
+    "content": "Bu bilgileri başka nereden bulabilirim?",
+    "date": "2025-07-04"
+  },
+  {
+    "id": "35",
+    "postId": 36,
+    "userId": 45,
+    "author": "Murat Işık",
+    "content": "Tebrik ederim, başarılı bir çalışma.",
+    "date": "2025-07-05"
+  },
+  {
+    "id": "36",
+    "postId": 18,
+    "userId": 46,
+    "author": "Gülşah Yıldırım",
+    "content": "Gerçekten emek verilmiş bir yazı olmuş.",
+    "date": "2025-07-03"
+  },
+  {
+    "id": "37",
+    "postId": 10,
+    "userId": 47,
+    "author": "Barış Avcı",
+    "content": "Bana ilham verdi, teşekkür ederim.",
+    "date": "2025-07-03"
+  },
+  {
+    "id": "38",
+    "postId": 36,
+    "userId": 48,
+    "author": "Hazal Koç",
+    "content": "Daha fazla teknik detay görmek isterdim.",
+    "date": "2025-07-06"
+  },
+  {
+    "id": "39",
+    "postId": 11,
+    "userId": 49,
+    "author": "Oğuzhan Demir",
+    "content": "Yorumlar kısmı da çok canlı.",
+    "date": "2025-07-07"
+  },
+  {
+    "id": "40",
+    "postId": 14,
+    "userId": 50,
+    "author": "Nisa Ateş",
+    "content": "Bu yazıyı arkadaşlarımla paylaşacağım.",
+    "date": "2025-07-06"
+  }
+
+]

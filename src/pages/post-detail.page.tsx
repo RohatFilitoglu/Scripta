@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
 import posts from "../data/posts.json";
+import PostComments from "../components/PostComments";
 
 const PostDetailPage = () => {
   const { id } = useParams();
 
-  const post = posts.find((p) => p.id === Number(id));
+  const post = posts.find((p) => p.id === id);
 
   if (!post) {
     return <div>Post bulunamadı!</div>;
@@ -17,12 +18,10 @@ const PostDetailPage = () => {
       </h1>
 
       <div className="flex items-center justify-between text-gray-500 text-sm mb-8">
-        {/* Yazar ve tarih */}
         <div>
           by <span className="font-medium">{post.author}</span> — {post.date}
         </div>
 
-        {/* Likes butonu */}
         <button
           type="button"
           className="flex items-center space-x-2 px-3 py-1 rounded-full font-semibold text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400"
@@ -46,7 +45,7 @@ const PostDetailPage = () => {
 
       <div className="mb-10">
         <img
-          src={`/${post.image}`}
+          src={post.image}
           alt={post.title}
           className="w-full max-h-96 rounded-lg shadow-lg object-cover"
         />
@@ -55,6 +54,8 @@ const PostDetailPage = () => {
       <article className="text-gray-900 leading-relaxed font-serif text-lg">
         {post.excerpt}
       </article>
+
+      <PostComments postId={id!} />
     </div>
   );
 };

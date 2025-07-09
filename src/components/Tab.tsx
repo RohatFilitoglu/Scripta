@@ -1,7 +1,7 @@
 
 
 const categories = [
-  `All`,
+  "All",
   "Technology",
   "Programming",
   "Design",
@@ -23,7 +23,7 @@ const CategoryTabs: React.FC<Props> = ({
   setSelectedCategory,
 }) => {
   return (
-    <div className="overflow-x-auto mt-6">
+    <div className="overflow-x-auto  min-w-max mt-6">
       <nav className="flex justify-center space-x-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto border-b border-gray-300">
         {categories.map((category) => (
           <button

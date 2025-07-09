@@ -1,12 +1,10 @@
 import "./App.css";
-import Navbar from "./components/Navbar";
-import { Outlet } from "react-router-dom"; // 💡 Bunu ekle
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <div>
-      <Navbar />
-      <Outlet /> {/* 👉 Route'lara göre içerik burada değişecek */}
+      <Outlet />
     </div>
   );
 }
