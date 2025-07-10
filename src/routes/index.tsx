@@ -4,7 +4,6 @@ import PostDetailPage from "../pages/post-detail.page";
 import "../routes/index.css";
 import NewPostPage from "../pages/new-post.page";
 
-// Lazy yüklenen bileşen
 const AppPage = React.lazy(() => import("../App"));
 const HomePage = React.lazy(() => import("../pages/home.page"));
 const SignInPage = React.lazy(() => import("../pages/sign-in.page"));

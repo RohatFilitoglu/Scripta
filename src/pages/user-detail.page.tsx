@@ -7,7 +7,7 @@ import PostCard from "../components/PostCard";
 
 const UserDetailPage: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
-  const userId = id ?? "0"; // string olarak kullanıyoruz
+  const userId = id ?? "0"; 
 
   const user = users.find((u) => u.id === userId);
   const userPosts = posts.filter((post) => post.userId === userId);

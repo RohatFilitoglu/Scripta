@@ -59,7 +59,7 @@ export default function NewPostPage() {
       <div className="flex items-center justify-between mb-10 border-b pb-4 border-gray-300">
         <div className="flex items-center space-x-4 ">
           <Link
-            to="/"
+            to="/home"
             className="text-2xl font-bold text-gray-900"
             style={{ fontFamily: "'Pacifico', cursive" }}
           >
@@ -90,7 +90,6 @@ export default function NewPostPage() {
         </button>
       </div>
 
-      {/* Form */}
       <form id="postForm" onSubmit={handleSubmit} className="space-y-10">
         <div>
           <input

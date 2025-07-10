@@ -4,69 +4,80 @@
     "name": "Rohat Filitoğlu",
     "username": "rohatfilitoglu",
     "email": "rohat@gmail.com",
-    "password": "123456"
+    "password": "123456",
+    "avatar": "profile.jpg"
+    
   },
   {
     "id": "2",
     "name": "Elif Yılmaz",
     "username": "elifyilmaz",
     "email": "elif@gmail.com",
-    "password": "password"
+    "password": "password",
+    "avatar": "profile.jpg"
   },
   {
     "id": "3",
     "name": "Ahmet Demir",
     "username": "ahmetdemir",
     "email": "ahmet@gmail.com",
-    "password": "abcdef"
+    "password": "abcdef",
+    "avatar": "profile.jpg"
   },
   {
     "id": "4",
     "name": "Selin Kaya",
     "username": "selinkaya",
     "email": "selin@gmail.com",
-    "password": "selin123"
+    "password": "selin123",
+    "avatar": "profile.jpg"
   },
   {
     "id": "5",
     "name": "Murat Çelik",
     "username": "muratcelik",
     "email": "murat@gmail.com",
-    "password": "murat456"
+    "password": "murat456",
+    "avatar": "profile.jpg"
   },
   {
     "id": "6",
     "name": "Derya Şahin",
     "username": "deryasahin",
     "email": "derya@gmail.com",
-    "password": "derya789"
+    "password": "derya789",
+    "avatar": "profile.jpg"
   },
   {
     "id": "7",
     "name": "Cem Karaca",
     "username": "cemkaraca",
     "email": "cem@gmail.com",
-    "password": "cem321"
+    "password": "cem321",
+    "avatar": "profile.jpg"
   },
   {
     "id": "8",
     "name": "Zeynep Aydın",
     "username": "zeynepaydin",
     "email": "zeynep@gmail.com",
-    "password": "zeynep654"
+    "password": "zeynep654",
+    "avatar": "profile.jpg"
   },
   {
     "id": "9",
     "name": "Okan Yıldırım",
     "username": "okanyildirim",
     "email": "okan@gmail.com",
-    "password": "okan987"
+    "password": "okan987",
+    "avatar": "profile.jpg"
   },
   {
     "id": "10",
     "name": "Ayşe Demirtaş",
     "username": "aysedemirtas",
     "email": "ayse@gmail.com",
-    "password": "ayse159"
+    "password": "ayse159",
+    "avatar": "profile.jpg"
   }
 ]

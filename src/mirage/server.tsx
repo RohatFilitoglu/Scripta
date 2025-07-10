@@ -39,6 +39,11 @@ export function makeServer() {
       this.namespace = "api";
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this.get("/users", (schema: any) => {
+        return schema.users.all();
+      });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       this.get("/posts", (schema: any) => {
         return schema.posts.all();
       });
