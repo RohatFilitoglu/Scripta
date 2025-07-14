@@ -1,66 +1,115 @@
-// AuthContext.tsx
-import { createContext, useEffect, useState } from "react";
-import type { ReactNode } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
+import { supabase } from "../../supabaseClient";
 
-interface User {
+interface UserProfile {
   id: string;
-  name: string;
   username: string;
-  email: string;
-  password: string;
-  avatar: string;
+  name: string;
+  avatar_url: string;
 }
 
 interface AuthContextType {
-  user: User | null;
-  login: (email: string, password: string) => Promise<boolean>;
-  logout: () => void;
+  user: UserProfile | null;
+  loading: boolean;
+  signUp: (email: string, password: string, username: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// eslint-disable-next-line react-refresh/only-export-components
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+  const fetchUserProfile = async (userId: string) => {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+
+    if (error) {
+      console.error("Profil verisi çekilemedi:", error.message);
+      return;
     }
-  }, []);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
-    try {
-      const res = await fetch("/api/users"); // 👈 doğru endpoint
-      const users: User[] = (await res.json()).users; // MirageJS tüm veriyi objeye sarar
-
-      const matchedUser = users.find(
-        (u) => u.email === email && u.password === password
-      );
-
-      if (matchedUser) {
-        setUser(matchedUser);
-        localStorage.setItem("user", JSON.stringify(matchedUser));
-        return true;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-      return false;
+    if (data) {
+      setUser(data);
     }
   };
 
-  const logout = () => {
+  useEffect(() => {
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (data?.user?.id) await fetchUserProfile(data.user.id);
+      setLoading(false);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      async (_event, session) => {
+        if (session?.user) {
+          await fetchUserProfile(session.user.id);
+        } else {
+          setUser(null);
+        }
+      }
+    );
+
+    return () => {
+      listener?.subscription?.unsubscribe?.();
+    };
+  }, []);
+
+  const signUp = async (email: string, password: string, username: string) => {
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) throw error;
+
+    if (data?.user) {
+      const { error: profileError } = await supabase.from("profiles").insert({
+        id: data.user.id,
+        username,
+        name: "",
+        avatar_url: "",
+      });
+
+      if (profileError) {
+        console.error("Profile ekleme hatası:", profileError.message);
+        throw profileError;
+      }
+
+      await fetchUserProfile(data.user.id);
+    }
+  };
+
+  const signIn = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
+    if (data.user) await fetchUserProfile(data.user.id);
+  };
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export { AuthContext };
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};

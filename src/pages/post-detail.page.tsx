@@ -1,27 +1,23 @@
 import { useParams, useNavigate } from "react-router-dom";
-import posts from "../data/posts.json";
-import PostComments from "../components/PostComments";
 import { useAuth } from "../context/useAuth";
 import { useEffect, useState, useRef } from "react";
+import { store } from "../store";
+import PostThunks from "../store/asyns-thunks/post.thunks";
+import usePostStore from "../store/hooks/use-post.hook";
 
 const PostDetailPage = () => {
   const { user } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const [post, setPost] = useState(
-    () => posts.find((p) => p.id === id) || null
-  );
-
-  // Dropdown açma kapama durumu
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const { selectedPost } = usePostStore();
 
   useEffect(() => {
-    const selected = posts.find((p) => p.id === id);
-    setPost(selected || null);
-  }, [id]);
+    if (!id) return;
+    store.dispatch(PostThunks.getPostById(id));
+  }, []);
 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -50,19 +46,20 @@ const PostDetailPage = () => {
     }
   };
 
-  if (!post) {
+  if (!selectedPost) {
     return <div>Post bulunamadı!</div>;
   }
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 prose prose-lg prose-indigo">
       <h1 className="font-serif font-bold text-4xl mb-6 leading-tight">
-        {post.title}
+        {selectedPost.title}
       </h1>
 
       <div className="flex items-center justify-between text-gray-500 text-sm mb-8">
         <div>
-          by <span className="font-medium">{post.author}</span> — {post.date}
+          by <span className="font-medium">{selectedPost.author}</span> —{" "}
+          {selectedPost.date}
         </div>
         <div className="flex flex-row items-center space-x-2">
           <button
@@ -82,10 +79,10 @@ const PostDetailPage = () => {
             >
               <path d="M7 11c.889-.086 1.416-.543 2.156-1.057a22.323 22.323 0 003.958-5.084 1.6 1.6 0 01.582-.628 1.549 1.549 0 011.466-.087c.205.095.388.233.537.406a1.64 1.64 0 01.384 1.279l-1.388 4.114M7 11H4v6.5A1.5 1.5 0 005.5 19v0A1.5 1.5 0 007 17.5V11zm6.5-1h4.915c.286 0 .372.014.626.15.254.135.472.332.637.572a1.874 1.874 0 01.215 1.673l-2.098 6.4C17.538 19.52 17.368 20 16.12 20c-2.303 0-4.79-.943-6.67-1.475" />
             </svg>
-            <span>{post.likes}</span>
+            <span>{selectedPost.likes}</span>
           </button>
 
-          {user?.id === post.userId && (
+          {user?.id === selectedPost.userId && (
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -125,17 +122,17 @@ const PostDetailPage = () => {
 
       <div className="mb-10">
         <img
-          src={post.image}
-          alt={post.title}
+          src={selectedPost.image}
+          alt={selectedPost.title}
           className="w-full max-h-96 rounded-lg shadow-lg object-cover"
         />
       </div>
 
       <article className="text-gray-900 leading-relaxed font-serif text-lg">
-        {post.excerpt}
+        {selectedPost.excerpt}
       </article>
 
-      <PostComments postId={id!} />
+      {/* <PostComments postId={id!} /> */}
     </div>
   );
 };

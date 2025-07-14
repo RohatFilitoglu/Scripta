@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/useAuth";
+import { useAuth } from "../context/AuthContext"; 
 
 const SignIn = () => {
-  const { login, user } = useAuth();
+  const { signIn, user } = useAuth(); 
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -13,10 +13,10 @@ const SignIn = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const success = await login(email, password);
-    if (success) {
+    try {
+      await signIn(email, password);
       navigate("/");
-    } else {
+    } catch {
       setError("Geçersiz email veya şifre");
     }
   };
