@@ -3,6 +3,7 @@ import PostService from "../../services/post.service";
 import type {
   getAllPostsResponse,
   getPostResponse,
+  newPostPayload,
 } from "../../models/posts.type";
 
 const getAllPosts = createAsyncThunk<getAllPostsResponse>(
@@ -28,10 +29,23 @@ const getPostById = createAsyncThunk<getPostResponse, string>(
     }
   }
 );
+  
+const newPost = createAsyncThunk<string, newPostPayload>(
+  "post/postnewPost",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await PostService.newPost(payload);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const PostThunks = {
   getAllPosts,
   getPostById,
+  newPost,
 };
 
 export default PostThunks;

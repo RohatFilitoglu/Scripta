@@ -4,9 +4,10 @@ import { useEffect, useState, useRef } from "react";
 import { store } from "../store";
 import PostThunks from "../store/asyns-thunks/post.thunks";
 import usePostStore from "../store/hooks/use-post.hook";
+import PostComments from "../components/PostComments";
 
 const PostDetailPage = () => {
-  const { user } = useAuth();
+  const { session } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const { selectedPost } = usePostStore();
@@ -82,7 +83,7 @@ const PostDetailPage = () => {
             <span>{selectedPost.likes}</span>
           </button>
 
-          {user?.id === selectedPost.userId && (
+          {session?.user?.id === selectedPost.userId && (
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -132,7 +133,7 @@ const PostDetailPage = () => {
         {selectedPost.excerpt}
       </article>
 
-      {/* <PostComments postId={id!} /> */}
+      <PostComments postId={selectedPost.id} />
     </div>
   );
 };

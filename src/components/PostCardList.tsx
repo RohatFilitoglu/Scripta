@@ -28,3 +28,4 @@ const PostCardList = ({ selectedCategory }: { selectedCategory: string }) => {
 };
 
 export default PostCardList;
+ 

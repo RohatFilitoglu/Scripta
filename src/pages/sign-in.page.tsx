@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext"; 
+import { useAuth } from "../context/useAuth";
 
 const SignIn = () => {
-  const { signIn, user } = useAuth(); 
+  const { signIn, session } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -22,10 +22,10 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (session?.user) {
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [session, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4">
@@ -85,6 +85,6 @@ const SignIn = () => {
       </form>
     </div>
   );
-};
+};  
 
 export default SignIn;

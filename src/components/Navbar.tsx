@@ -3,19 +3,20 @@ import { useAuth } from "../context/useAuth";
 import ProfileDropdown from "./ProfileDropdown";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { session } = useAuth();
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center space-x-6">
-            <div
+            <Link
+              to="/"
               className="text-3xl text-gray-900 font-bold"
               style={{ fontFamily: "'Pacifico', cursive" }}
             >
               Scripta
-            </div>
+            </Link>
 
             <div className="hidden md:flex items-center w-64 bg-gray-100 rounded-full px-3 py-1.5">
               <svg
@@ -41,9 +42,8 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            {user ? (
+            {session?.user ? (
               <>
-             
                 <Link
                   to="/new-post"
                   className="hidden md:inline-flex items-center gap-2 text-sm text-black hover:text-white hover:bg-black px-4 py-2 rounded-full transition duration-200 border border-gray-300 cursor-pointer"

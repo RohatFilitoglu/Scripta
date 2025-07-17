@@ -3,7 +3,9 @@ import { persistReducer } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
 import persistStore from "redux-persist/es/persistStore";
 import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux";
-import { reducer as postReducer } from "./slice/post.slice"; // postStore.reducer -> postReducer
+
+import { reducer as postReducer } from "./slice/post.slice";
+import { commentReducer } from "./slice/comment.slice"; // Burada commentReducer ekliyoruz
 
 const persistConfig = {
   key: "root",
@@ -12,15 +14,17 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   postStore: postReducer,
+  commentStore: commentReducer, // commentStore eklendi
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer, 
+  reducer: persistedReducer,
 });
 
 export const persistor = persistStore(store);
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

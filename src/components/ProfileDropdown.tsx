@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import profile from "../assets/image/profile.jpg";
 import { useAuth } from "../context/useAuth";
 
 export default function ProfileDropdown() {
-  const { logout, user } = useAuth();
+  const { signOut, session, profile } = useAuth();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -20,11 +19,14 @@ export default function ProfileDropdown() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  useEffect(() => {
+    console.log(session);
+  }, [open]);
 
   return (
     <div className="relative" ref={dropdownRef}>
       <img
-        src={profile}
+        src={profile?.avatar_url}
         alt="Profile"
         onClick={() => setOpen(!open)}
         className="w-9 h-9 rounded-full cursor-pointer border border-gray-300 hover:ring-2 ring-gray-400 transition"
@@ -49,14 +51,17 @@ export default function ProfileDropdown() {
                 <circle cx="12" cy="7" r="4" />
               </svg>
               <Link
-                to={`/users/${user?.id}`}
+                to={`/users/${session?.user.id}`}
                 className="text-md font-sans text-gray-500 group-hover:text-black transition-colors duration-200"
               >
                 Profile
               </Link>
             </div>
-          
-            <div className="flex items-center gap-4 px-4 py-2 transition-colors  cursor-pointer group">
+
+            <div
+              className="flex items-center gap-4 px-4 py-2 transition-colors  cursor-pointer group"
+              onClick={signOut}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-5 h-5 text-red-400"
@@ -72,10 +77,7 @@ export default function ProfileDropdown() {
                 <line x1="21" y1="12" x2="9" y2="12" />
               </svg>
 
-              <button
-                onClick={logout}
-                className="text-md font-sans text-red-400 group-hover:text-red-600 transition-colors duration-200"
-              >
+              <button className="text-md font-sans text-red-400 group-hover:text-red-600 transition-colors duration-200">
                 Log out
               </button>
             </div>

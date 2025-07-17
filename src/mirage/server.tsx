@@ -13,11 +13,11 @@ export function makeServer() {
     },
 
     seeds(server) {
-      usersData.forEach(user =>
+      usersData.forEach((user) =>
         server.create("user", { ...user, id: String(user.id) })
       );
 
-      postsData.forEach(post =>
+      postsData.forEach((post) =>
         server.create("post", {
           ...post,
           id: String(post.id),
@@ -25,7 +25,7 @@ export function makeServer() {
         })
       );
 
-      commentsData.forEach(comment =>
+      commentsData.forEach((comment) =>
         server.create("comment", {
           ...comment,
           id: String(comment.id),
@@ -78,7 +78,7 @@ export function makeServer() {
       this.get("/users/:id/todos", (schema: any, request) => {
         return schema.todos.where({ userId: request.params.id });
       });
-    }
+    },
   });
 }
 
