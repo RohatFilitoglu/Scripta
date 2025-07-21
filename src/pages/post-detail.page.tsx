@@ -5,6 +5,7 @@ import { store } from "../store";
 import PostThunks from "../store/asyns-thunks/post.thunks";
 import usePostStore from "../store/hooks/use-post.hook";
 import PostComments from "../components/PostComments";
+import { supabase } from "../../supabaseClient";
 
 const PostDetailPage = () => {
   const { session } = useAuth();
@@ -15,7 +16,7 @@ const PostDetailPage = () => {
   useEffect(() => {
     if (!id) return;
     store.dispatch(PostThunks.getPostById(id));
-  }, []);
+  }, );
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -34,22 +35,34 @@ const PostDetailPage = () => {
   }, []);
 
   const handleDelete = async () => {
-    try {
-      const res = await fetch(`/api/posts/${id}`, {
-        method: "DELETE",
-      });
+    if (!session?.user?.id || !selectedPost?.userId) return;
 
-      if (!res.ok) throw new Error("Post silinemedi");
-
-      navigate("/");
-    } catch (err) {
-      console.error(err);
+    if (session.user.id !== selectedPost.userId) {
+      alert("Bu postun sahibi değilsiniz.");
+      return;
     }
+
+    
+    
+    const { error } = await supabase
+      .from("posts")
+      .delete()
+      .eq("id", selectedPost.id)
+      .eq("userId", session.user.id);
+
+
+    if (error) {
+      console.error("Post silinemedi:", error.message);
+      return;
+    }
+
+
+    navigate("/");
   };
 
   if (!selectedPost) {
-    return <div>Post bulunamadı!</div>;
-  }
+  return <div>Post bulunamadı!</div>;
+}
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 prose prose-lg prose-indigo">

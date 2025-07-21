@@ -1,4 +1,4 @@
-export type newPostPayload = {
+export type   newPostPayload = {
   author: string;
   title: string;
   userId: string;

@@ -1,85 +1,60 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import type {
+  getAllCommentsResponse,
+  getCommentResponse,
+  newCommentPayload,
+} from "../../models/comments.type";
 import CommentService from "../../services/comments.service";
+import type { AxiosError } from "axios";
 
-export const getCommentsByPostId = createAsyncThunk(
-  "comments/getByPostId",
-  async (postId: string, thunkAPI) => {
+const getAllComments = createAsyncThunk<getAllCommentsResponse[]>(
+  "comment/getAllComments", 
+  async (_, thunkAPI) => {
     try {
-      const { data } = await CommentService.getCommentsByPostId(postId);
+      const { data } = await CommentService.getAllComments();
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const getCommentById = createAsyncThunk<getCommentResponse, string>(
+  "comment/getCommentById",
+  async (id, thunkAPI) => {
+    try {
+      const { data } = await CommentService.getComment(id);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const newComment = createAsyncThunk(
+  "comment/newComment",
+  async (payload: newCommentPayload, thunkAPI) => {
+    try {
+      const { data } = await CommentService.newComment(payload);
       return data;
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        return thunkAPI.rejectWithValue(
-          error.response?.data?.error || "Yorumlar alınamadı"
-        );
+      let message = "Bir hata oluştu";
+
+      if (error && typeof error === "object" && "isAxiosError" in error) {
+        const axiosError = error as AxiosError<{ message?: string }>;
+        message = axiosError.response?.data?.message || message;
       }
-      return thunkAPI.rejectWithValue("Bilinmeyen hata oluştu");
+
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-export const addComment = createAsyncThunk(
-  "comments/add",
-  async (
-    payload: {
-      postId: string;
-      userId: string;
-      content: string;
-      author: string;
-    },
-    thunkAPI
-  ) => {
-    try {
-      const { data } = await CommentService.addComment(payload);
-      return data;
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        return thunkAPI.rejectWithValue(
-          error.response?.data?.error || "Yorum eklenemedi"
-        );
-      }
-      return thunkAPI.rejectWithValue("Bilinmeyen hata oluştu");
-    }
-  }
-);
 
-export const deleteComment = createAsyncThunk(
-  "comments/delete",
-  async (id: string, thunkAPI) => {
-    try {
-      await CommentService.deleteComment(id);
-      return id;
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        return thunkAPI.rejectWithValue(
-          error.response?.data?.error || "Yorum silinemedi"
-        );
-      }
-      return thunkAPI.rejectWithValue("Bilinmeyen hata oluştu");
-    }
-  }
-);
+const CommentThunks = {
+  getAllComments,
+  getCommentById,
+  newComment,
+};
 
-export const updateComment = createAsyncThunk(
-  "comments/update",
-  async (
-    { id, content, author }: { id: string; content: string; author: string },
-    thunkAPI
-  ) => {
-    try {
-      const { data } = await CommentService.updateComment(id, {
-        content,
-        author,
-      });
-      return data;
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        return thunkAPI.rejectWithValue(
-          error.response?.data?.error || "Yorum güncellenemedi"
-        );
-      }
-      return thunkAPI.rejectWithValue("Bilinmeyen hata oluştu");
-    }
-  }
-);
+export default CommentThunks;

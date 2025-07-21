@@ -5,7 +5,7 @@ import persistStore from "redux-persist/es/persistStore";
 import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux";
 
 import { reducer as postReducer } from "./slice/post.slice";
-import { commentReducer } from "./slice/comment.slice"; // Burada commentReducer ekliyoruz
+import { reducer as commentReducer } from "./slice/comment.slice"; 
 
 const persistConfig = {
   key: "root",
@@ -14,7 +14,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   postStore: postReducer,
-  commentStore: commentReducer, // commentStore eklendi
+  commentStore: commentReducer, 
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

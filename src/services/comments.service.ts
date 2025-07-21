@@ -1,37 +1,25 @@
 import http from "../http";
-
-type Comment = {
-  id: string;
-  postId: string;
-  userId: string;
-  content: string;
-  author: string;
-  date?: string;
-};
-
-type NewCommentPayload = {
-  postId: string;
-  userId: string;
-  content: string;
-  author: string;
-};
-
-type UpdateCommentPayload = {
-  content: string;
-  author: string;
-};
+import type {
+  getAllCommentsResponse,
+  getCommentResponse,
+  newCommentPayload,
+} from "../models/comments.type";
 
 const CommentService = {
-  getCommentsByPostId: (postId: string) =>
-    http.get<Comment[]>(`/comments/${postId}`),
+  getAllComments: () =>
+    http.get<getAllCommentsResponse[]>("/comments"),
 
-  addComment: (payload: NewCommentPayload) =>
-    http.post<Comment>("/comments", payload),
+  getComment: (postId: string) =>
+    http.get<getCommentResponse>(`/comments/${postId}`),
 
-  deleteComment: (id: string) => http.delete<void>(`/comments/${id}`),
+  newComment: (payload: newCommentPayload) =>
+    http.post<getCommentResponse>("/comments", payload),
 
-  updateComment: (id: string, payload: UpdateCommentPayload) =>
-    http.put<Comment>(`/comments/${id}`, payload),
+  updateComment: (id: string, payload: newCommentPayload) =>
+    http.put<getCommentResponse>(`/comments/${id}`, payload),
+
+  deleteComment: (id: string) =>
+    http.delete<{ message: string }>(`/comments/${id}`),
 };
 
 export default CommentService;

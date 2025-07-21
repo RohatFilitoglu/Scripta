@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import PostThunks from "../store/asyns-thunks/post.thunks";
 import { store } from "../store";
@@ -10,11 +10,18 @@ const NewPostPage = () => {
   const [excerpt, setExcerpt] = useState("");
   const [author] = useState(profile?.full_name || "");
   const [userId] = useState(profile?.id || "");
-  const [date] = useState(new Date().toISOString());
+  const [date] = useState(
+    new Date().toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    })
+  );
   const [likes] = useState(0);
   const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
   const [loading] = useState(false);
+    const navigate = useNavigate();
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,6 +38,10 @@ const NewPostPage = () => {
         userId,
       })
     );
+
+        navigate("/");
+
+    
   };
 
   return (
@@ -38,7 +49,7 @@ const NewPostPage = () => {
       <div className="flex items-center justify-between mb-10 border-b pb-4 border-gray-300">
         <div className="flex items-center space-x-4 ">
           <Link
-            to="/home"
+            to="/"
             className="text-2xl font-bold text-gray-900"
             style={{ fontFamily: "'Pacifico', cursive" }}
           >
@@ -58,7 +69,7 @@ const NewPostPage = () => {
           form="postForm"
           className="w-auto px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full font-semibold text-sm transition disabled:opacity-50"
         >
-          {loading ? "Kaydediliyor..." : "Publish"}
+          {loading ? "saving..." : "Publish"}
         </button>
       </div>
 
