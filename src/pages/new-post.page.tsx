@@ -116,7 +116,6 @@ const NewPostPage = () => {
             value={category}
             onChange={(e) => {
               setCategory(e.target.value);
-              console.log(e.target.value);
             }}
             required
             className="w-50 text-xl px-6 py-4 placeholder-gray-400 placeholder:font-serif focus:outline-none focus:ring-0 focus:border-transparent"

@@ -1,5 +1,3 @@
-
-
 const categories = [
   "All",
   "Technology",

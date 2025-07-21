@@ -21,9 +21,9 @@ const getAllComments = createAsyncThunk<getAllCommentsResponse[]>(
 
 const getCommentById = createAsyncThunk<getCommentResponse, string>(
   "comment/getCommentById",
-  async (id, thunkAPI) => {
+  async (postid, thunkAPI) => {
     try {
-      const { data } = await CommentService.getComment(id);
+      const { data } = await CommentService.getComment(postid);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -40,7 +40,7 @@ const newComment = createAsyncThunk(
     } catch (error: unknown) {
       let message = "Bir hata oluştu";
 
-      if (error && typeof error === "object" && "isAxiosError" in error) {
+      if (error && typeof error === "object" && "isAxiosError" in error) { // bu kismi bi ara kavra
         const axiosError = error as AxiosError<{ message?: string }>;
         message = axiosError.response?.data?.message || message;
       }
@@ -50,11 +50,24 @@ const newComment = createAsyncThunk(
   }
 );
 
+const deleteComment = createAsyncThunk<{ message: string }, string>(
+  "comment/deleteComment",
+  async (id, thunkAPI) => {
+    try {
+      const { data } = await CommentService.deleteComment(id);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 
 const CommentThunks = {
   getAllComments,
   getCommentById,
   newComment,
+  deleteComment,
 };
 
 export default CommentThunks;

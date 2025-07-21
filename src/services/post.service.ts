@@ -15,7 +15,7 @@ const PostService = {
   updatePost: (id: number, post: newPostPayload) =>
     http.put(`/posts/${id}`, post),
 
-  deletePost: (id: number) => http.delete(`/posts/${id}`),
+  deletePost: (id: string) => http.delete(`/posts/${id}`),
 };
 
 export default PostService;

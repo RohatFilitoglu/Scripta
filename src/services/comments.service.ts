@@ -9,8 +9,8 @@ const CommentService = {
   getAllComments: () =>
     http.get<getAllCommentsResponse[]>("/comments"),
 
-  getComment: (postId: string) =>
-    http.get<getCommentResponse>(`/comments/${postId}`),
+  getComment: (commentId: string) =>
+    http.get<getCommentResponse>(`/comments/${commentId}`),
 
   newComment: (payload: newCommentPayload) =>
     http.post<getCommentResponse>("/comments", payload),

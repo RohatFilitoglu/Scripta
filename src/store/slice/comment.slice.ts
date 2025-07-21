@@ -6,10 +6,9 @@ import type {
 } from "../../models/comments.type";
 import CommentThunks from "../asyns-thunks/comment.thunks";
 
-
 type CommentState = {
-  comments: getCommentResponse[];             
-  allComments: getAllCommentsResponse[];       
+  comments: getCommentResponse;
+  allComments: getAllCommentsResponse[];
 };
 
 const initialState: CommentState = {
@@ -27,13 +26,19 @@ const commentSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(CommentThunks.getAllComments.fulfilled, (state, { payload }) => {
-      state.allComments = payload;
-    });
+    builder.addCase(
+      CommentThunks.getAllComments.fulfilled,
+      (state, { payload }) => {
+        state.allComments = payload;
+      }
+    );
 
-    builder.addCase(CommentThunks.getCommentById.fulfilled, (state, { payload }) => {
-      state.comments = [payload]; 
-    });
+    builder.addCase(
+      CommentThunks.getCommentById.fulfilled,
+      (state, { payload }) => {
+        state.comments = payload;
+      }
+    );
   },
 });
 

@@ -1,8 +1,8 @@
 export type newCommentPayload = {
   content: string;
-  postId: string;
+  postid: string;
   author: string;
-  userId: string;
+  userid: string;
   date: string;
 };
 
@@ -17,12 +17,12 @@ export type getAllCommentsResponse = {
 
 export type getCommentResponse = {
   id: string;
-  postId: string;
+  postid: string;
   content: string;
   author: string;
   date: string;
-  userId: string;
-};
+  userid: string;
+}[];
 export type CommentType = {
   id: string;
   postId: string;

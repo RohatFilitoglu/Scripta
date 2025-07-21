@@ -16,7 +16,7 @@ const PostDetailPage = () => {
   useEffect(() => {
     if (!id) return;
     store.dispatch(PostThunks.getPostById(id));
-  }, );
+  }, [id]);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -42,27 +42,23 @@ const PostDetailPage = () => {
       return;
     }
 
-    
-    
     const { error } = await supabase
       .from("posts")
       .delete()
       .eq("id", selectedPost.id)
       .eq("userId", session.user.id);
 
-
     if (error) {
       console.error("Post silinemedi:", error.message);
       return;
     }
 
-
     navigate("/");
   };
 
   if (!selectedPost) {
-  return <div>Post bulunamadı!</div>;
-}
+    return <div>Post bulunamadı!</div>;
+  }
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 prose prose-lg prose-indigo">
@@ -145,8 +141,7 @@ const PostDetailPage = () => {
       <article className="text-gray-900 leading-relaxed font-serif text-lg">
         {selectedPost.excerpt}
       </article>
-
-      <PostComments postId={selectedPost.id} />
+      <PostComments postid={selectedPost.id} />
     </div>
   );
 };
