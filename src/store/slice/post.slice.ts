@@ -6,12 +6,12 @@ import type {
 import type { RootState } from "..";
 import PostThunks from "../asyns-thunks/post.thunks";
 
-type TPostState = {
+type PostState = {
   allPosts: getAllPostsResponse | undefined;
   selectedPost: getPostResponse | undefined;
 };
 
-const initialState: TPostState = {
+const initialState: PostState = {
   allPosts: undefined,
   selectedPost: undefined,
 };

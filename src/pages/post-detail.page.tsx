@@ -59,6 +59,7 @@ const PostDetailPage = () => {
   if (!selectedPost) {
     return <div>Post bulunamadı!</div>;
   }
+  
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 prose prose-lg prose-indigo">
