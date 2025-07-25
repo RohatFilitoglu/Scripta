@@ -5,7 +5,7 @@ import { store } from "../store";
 import PostThunks from "../store/asyns-thunks/post.thunks";
 import usePostStore from "../store/hooks/use-post.hook";
 import PostComments from "../components/PostComments";
-import { supabase } from "../../supabaseClient";
+import FavoriteButton from "../components/FavoriteButton";
 
 const PostDetailPage = () => {
   const { session } = useAuth();
@@ -14,8 +14,9 @@ const PostDetailPage = () => {
   const { selectedPost } = usePostStore();
 
   useEffect(() => {
-    if (!id) return;
-    store.dispatch(PostThunks.getPostById(id));
+    if (id) {
+      store.dispatch(PostThunks.getPostById(id));
+    }
   }, [id]);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -34,32 +35,22 @@ const PostDetailPage = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleDelete = async () => {
-    if (!session?.user?.id || !selectedPost?.userId) return;
+  const handleDeletePost = () => {
+    if (!selectedPost?.id) return alert("Post bulunamadı.");
+    const confirmDelete = window.confirm(
+      "Bu postu silmek istediğinize emin misiniz?"
+    );
+    if (!confirmDelete) return;
 
-    if (session.user.id !== selectedPost.userId) {
-      alert("Bu postun sahibi değilsiniz.");
-      return;
-    }
-
-    const { error } = await supabase
-      .from("posts")
-      .delete()
-      .eq("id", selectedPost.id)
-      .eq("userId", session.user.id);
-
-    if (error) {
-      console.error("Post silinemedi:", error.message);
-      return;
-    }
-
-    navigate("/");
+    store.dispatch(PostThunks.deletePost(selectedPost.id)).then(() => {
+      store.dispatch(PostThunks.getAllPosts());
+      navigate("/"); 
+    });
   };
 
   if (!selectedPost) {
-    return <div>Post bulunamadı!</div>;
+    return <div className="text-center py-12 text-gray-500">Yükleniyor...</div>;
   }
-  
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-6 prose prose-lg prose-indigo">
@@ -73,6 +64,7 @@ const PostDetailPage = () => {
           {selectedPost.date}
         </div>
         <div className="flex flex-row items-center space-x-2">
+          <FavoriteButton postId={selectedPost.id} />
           <button
             type="button"
             className="flex items-center space-x-2 px-3 py-1 rounded-full font-semibold text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400"
@@ -118,7 +110,7 @@ const PostDetailPage = () => {
                   <button
                     onClick={() => {
                       setDropdownOpen(false);
-                      handleDelete();
+                      handleDeletePost();
                     }}
                     className="w-full  text-left px-4 py-2 text-sm text-red-400 hover:text-red-500"
                   >

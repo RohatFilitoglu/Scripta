@@ -3,7 +3,7 @@ import FavoriteService from "../../services/favorite.service";
 import type {
   Favorite,
   AddFavoritePayload,
-  getAllFavoritesResponse,
+  DeleteFavoritePayload,
 } from "../../models/favorite.type";
 
 const getFavoritesById = createAsyncThunk<Favorite[], string>(
@@ -11,18 +11,6 @@ const getFavoritesById = createAsyncThunk<Favorite[], string>(
   async (userId, thunkAPI) => {
     try {
       const { data } = await FavoriteService.getFavoritesByUser(userId);
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
-const getAllFavorite = createAsyncThunk<getAllFavoritesResponse[]>(
-  "favorite/getAllFavorite",
-  async (_, thunkAPI) => {
-    try {
-      const { data } = await FavoriteService.getAllFavorite();
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -42,21 +30,20 @@ const addFavorite = createAsyncThunk<Favorite, AddFavoritePayload>(
   }
 );
 
-const deleteFavorite = createAsyncThunk<{ message: string }, string>(
-  "favorite/deleteComment",
-  async (id, thunkAPI) => {
-    try {
-      const { data } = await FavoriteService.deleteFavorite(id);
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
+const deleteFavorite = createAsyncThunk<
+  { message: string }, // Dönen veri türü
+  DeleteFavoritePayload // Alınan parametre
+>("favorite/deleteFavorite", async (payload, thunkAPI) => {
+  try {
+    const { data } = await FavoriteService.deleteFavorite(payload);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
   }
-);
+});
 
 const FavoriteThunks = {
   getFavoritesById,
-  getAllFavorite,
   addFavorite,
   deleteFavorite,
 };

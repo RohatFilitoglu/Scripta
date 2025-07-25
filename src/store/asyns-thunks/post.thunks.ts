@@ -29,7 +29,7 @@ const getPostById = createAsyncThunk<getPostResponse, string>(
     }
   }
 );
-  
+
 const newPost = createAsyncThunk<string, newPostPayload>(
   "post/postnewPost",
   async (payload, thunkAPI) => {
@@ -41,11 +41,38 @@ const newPost = createAsyncThunk<string, newPostPayload>(
     }
   }
 );
+const deletePost = createAsyncThunk<{ message: string }, string>(
+  "post/deletePost",
+  async (postId, thunkAPI) => {
+    try {
+      const { data } = await PostService.deletePost(postId); 
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const getPostsByUser = createAsyncThunk<getAllPostsResponse, string>(
+  "post/getPostsByUser",
+  async (userId, thunkAPI) => {
+    try {
+      const { data } = await PostService.getPostsByUser(userId);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 
 const PostThunks = {
   getAllPosts,
   getPostById,
   newPost,
+  deletePost,
+  getPostsByUser,
 };
 
 export default PostThunks;
+

@@ -35,6 +35,10 @@ export type getPostResponse = {
   created_at: string;
 };
 
+export type DeletePostPayload ={
+  id: string;
+};
+
 export type PostType = {
   id: string;
   title: string;

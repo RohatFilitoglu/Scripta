@@ -1,29 +1,26 @@
+import type{ PostType } from "./posts.type";
+
 export type Favorite = {
   id: string;
   userId: string;
-  postid: string;
+  postId: string;
   created_at: string;
 };
 
 export type getFavoriteResponse = {
   id: string;
   userId: string;
-  postid: string;
+  postId: string;
   created_at: string;
-};
-
-export type getAllFavoritesResponse = {
-  id: string;
-  userId: string;
-  postid: string;
-  created_at: string;
+  post: PostType;
 };
 
 export type AddFavoritePayload = {
   userId: string;
-  postid: string;
+  postId: string;
 };
 
-export type DeleteFavoriteParams = {
-  id: string;
+export type DeleteFavoritePayload = {
+  userId: string;
+  postId: string;
 };
