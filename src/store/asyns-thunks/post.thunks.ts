@@ -3,7 +3,6 @@ import PostService from "../../services/post.service";
 import type {
   getAllPostsResponse,
   getPostResponse,
-  newPostPayload,
 } from "../../models/posts.type";
 
 const getAllPosts = createAsyncThunk<getAllPostsResponse>(
@@ -30,7 +29,7 @@ const getPostById = createAsyncThunk<getPostResponse, string>(
   }
 );
 
-const newPost = createAsyncThunk<string, newPostPayload>(
+const newPost = createAsyncThunk<string, FormData>(
   "post/postnewPost",
   async (payload, thunkAPI) => {
     try {
@@ -41,6 +40,7 @@ const newPost = createAsyncThunk<string, newPostPayload>(
     }
   }
 );
+
 const deletePost = createAsyncThunk<{ message: string }, string>(
   "post/deletePost",
   async (postId, thunkAPI) => {

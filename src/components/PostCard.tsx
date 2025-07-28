@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { supabase } from "../../supabaseClient";
 
 type Post = {
@@ -24,11 +24,14 @@ const PostCard = ({ post }: Props) => {
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const imageUrl = `${supabaseUrl}/storage/v1/object/public/post-images/${post.image}`;
+
   const handleLikeClick = async () => {
-    if (loading) return; 
+    if (loading) return;
 
     setLoading(true);
-
     const newLiked = !liked;
     const newLikesCount = newLiked ? likes + 1 : likes - 1;
 
@@ -48,22 +51,6 @@ const PostCard = ({ post }: Props) => {
       setLikes(likes);
     }
   };
-
-  useEffect(() => {
-    const fetchLikes = async () => {
-      const { data, error } = await supabase
-        .from("posts")
-        .select("likes")
-        .eq("id", post.id)
-        .single();
-
-      if (!error && data) {
-        setLikes(data.likes);
-      }
-    };
-
-    fetchLikes();
-  }, [post.id]);
 
   return (
     <section className="max-w-screen-md mx-auto px-4 py-8">
@@ -121,8 +108,8 @@ const PostCard = ({ post }: Props) => {
           className="w-full md:w-50 h-35 flex-shrink-0 cursor-pointer"
         >
           <img
-            src={post.image}
-            alt="post görseli"
+            src={imageUrl}
+            alt={post.title}
             className="w-full h-full object-cover rounded"
           />
         </div>

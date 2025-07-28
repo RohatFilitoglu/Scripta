@@ -9,17 +9,21 @@ const PostService = {
   getAllPosts: () => http.get<getAllPostsResponse>("/posts"),
 
   getPostsByUser: (userId: string) =>
-  http.get<getAllPostsResponse>(`/posts/user/${userId}`),
+    http.get<getAllPostsResponse>(`/posts/user/${userId}`),
 
-  newPost: (payload: newPostPayload) => http.post("/posts", payload),
+  newPost: (payload: FormData) =>
+    http.post("/posts", payload, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
 
   getPost: (id: string) => http.get<getPostResponse>(`/posts/${id}`),
 
   updatePost: (id: number, post: newPostPayload) =>
     http.put(`/posts/${id}`, post),
 
-  deletePost: (id: string) =>
-    http.delete<{ message: string }>(`/posts/${id}`),
+  deletePost: (id: string) => http.delete<{ message: string }>(`/posts/${id}`),
 };
 
 export default PostService;

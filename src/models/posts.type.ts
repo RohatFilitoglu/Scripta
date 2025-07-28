@@ -1,11 +1,11 @@
-export type   newPostPayload = {
+export type newPostPayload = {
   author: string;
   title: string;
   userId: string;
   excerpt: string;
   date: string;
   likes?: number;
-  image: string;
+  image?: File | null; // Dosya objesi olabilir, veya boş/null
   category: string;
 };
 
@@ -35,7 +35,7 @@ export type getPostResponse = {
   created_at: string;
 };
 
-export type DeletePostPayload ={
+export type DeletePostPayload = {
   id: string;
 };
 

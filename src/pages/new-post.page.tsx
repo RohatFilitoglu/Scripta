@@ -17,31 +17,35 @@ const NewPostPage = () => {
     })
   );
   const [likes] = useState(0);
-  const [image, setImage] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [category, setCategory] = useState("");
   const [loading] = useState(false);
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    store.dispatch(
-      PostThunks.newPost({
-        author,
-        category,
-        date,
-        excerpt,
-        image,
-        likes,
-        title,
-        userId,
-      })
-    );
+    if (!imageFile) {
+      alert("Lütfen bir görsel seçin");
+      return;
+    }
 
-        navigate("/");
+    const formData = new FormData();
+    formData.append("author", author);
+    formData.append("title", title);
+    formData.append("userId", userId);
+    formData.append("excerpt", excerpt);
+    formData.append("date", date);
+    formData.append("likes", likes.toString());
+    formData.append("category", category);
+    formData.append("image", imageFile);
 
-    
+    try {
+      await store.dispatch(PostThunks.newPost(formData));
+      navigate("/");
+    } catch (error) {
+      console.error("Post gönderilirken hata:", error);
+    }
   };
 
   return (
@@ -77,10 +81,13 @@ const NewPostPage = () => {
         <div>
           <input
             id="image"
-            type="url"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            placeholder="Image URL"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              if (e.target.files && e.target.files.length > 0) {
+                setImageFile(e.target.files[0]);
+              }
+            }}
             required
             className="w-full text-md px-6 py-4 rounded-lg placeholder-gray-300 placeholder:font-serif focus:outline-none focus:ring-0 focus:border-transparent"
           />
