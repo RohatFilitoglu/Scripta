@@ -15,11 +15,6 @@ const UserFavoriteList: React.FC = () => {
   const displayedProfile = isCurrentUser ? profile : null;
 
   useEffect(() => {
-  console.log("FAVORITES >>>", favorites);
-}, [favorites]);
-
-
-  useEffect(() => {
     if (profile?.id) {
       store.dispatch(FavoriteThunks.getFavoritesById(profile?.id));
     }
