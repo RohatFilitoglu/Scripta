@@ -5,8 +5,9 @@ import persistStore from "redux-persist/es/persistStore";
 import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux";
 
 import { reducer as postReducer } from "./slice/post.slice";
-import { reducer as commentReducer } from "./slice/comment.slice"; 
-import { reducer as favoriteReducer} from "./slice/favorite.slice";
+import { reducer as commentReducer } from "./slice/comment.slice";
+import { reducer as favoriteReducer } from "./slice/favorite.slice";
+import { reducer as userReducer } from "./slice/user.slice"; 
 
 const persistConfig = {
   key: "root",
@@ -15,8 +16,9 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   postStore: postReducer,
-  commentStore: commentReducer, 
+  commentStore: commentReducer,
   favoriteStore: favoriteReducer,
+  userStore: userReducer, 
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

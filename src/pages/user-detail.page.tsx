@@ -2,27 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { store } from "../store";
 import PostThunks from "../store/asyns-thunks/post.thunks";
+import UserThunks from "../store/asyns-thunks/user.thunks";
 import usePostStore from "../store/hooks/use-post.hook";
-import { useAuth } from "../context/useAuth";
+import useUserStore from "../store/hooks/use-user.hook";
 import PostCard from "../components/PostCard";
 import UserFavoriteList from "../components/UserFavoriteList";
 
 const UserDetailPage: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
-  const { profile } = useAuth();
+
   const { userPosts } = usePostStore();
+  const { userDetail, loading: userLoading } = useUserStore();
+
   const [activeTab, setActiveTab] = useState<"home" | "favorites">("home");
 
   useEffect(() => {
     if (id) {
+      store.dispatch(UserThunks.getUserDetail(id));
       store.dispatch(PostThunks.getPostsByUser(id));
     }
   }, [id]);
 
-  const isCurrentUser = profile?.id === id;
-  const displayedProfile = isCurrentUser ? profile : null;
 
-  if (!displayedProfile) {
+  if (userLoading) {
+    return <div className="text-center py-20">Yükleniyor...</div>;
+  }
+
+  if (!userDetail) {
     return (
       <div className="text-center py-20 text-red-500">
         Kullanıcı bilgisi bulunamadı.
@@ -33,9 +39,9 @@ const UserDetailPage: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-15 ">
       <div className="mb-6  pb-4">
-        <h1 className="text-5xl font-bold">{displayedProfile.full_name}</h1>
-        <p className="text-gray-600 text-md">@{displayedProfile.username}</p>
-        <p className="mt-2 text-gray-500 italic">{displayedProfile.bio}</p>
+        <h1 className="text-5xl font-bold">{userDetail.full_name}</h1>
+        <p className="text-gray-600 text-md">@{userDetail.username}</p>
+        <p className="mt-2 text-gray-500 italic">{userDetail.bio}</p>
 
         <div className="flex space-x-4 border-b border-gray-400">
           <button

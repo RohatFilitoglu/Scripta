@@ -78,20 +78,50 @@ const NewPostPage = () => {
       </div>
 
       <form id="postForm" onSubmit={handleSubmit} className="space-y-10">
-        <div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="image"
+            className="mb-2 font-semibold text-gray-700 cursor-pointer"
+          >
+            Upload Image
+          </label>
+
           <input
             id="image"
             type="file"
             accept="image/*"
             onChange={(e) => {
               if (e.target.files && e.target.files.length > 0) {
-                setImageFile(e.target.files[0]);
+                const file = e.target.files[0];
+                if (!file.type.startsWith("image/")) {
+                  alert("Please select a valid image file.");
+                  e.target.value = "";
+                  setImageFile(null);
+                  return;
+                }
+                setImageFile(file);
+              } else {
+                setImageFile(null);
               }
             }}
-            required
-            className="w-full text-md px-6 py-4 rounded-lg placeholder-gray-300 placeholder:font-serif focus:outline-none focus:ring-0 focus:border-transparent"
+            className="block w-full text-sm text-gray-500
+               file:mr-4 file:py-2 file:px-4
+               file:rounded-full file:border-0
+               file:text-sm file:font-semibold
+               file:bg-green-50 file:text-green-700
+               hover:file:bg-green-100
+               cursor-pointer
+              "
           />
+
+          {imageFile && (
+            <p className="mt-2 text-sm text-gray-700 italic">
+              Selected file:{" "}
+              <span className="font-medium">{imageFile.name}</span>
+            </p>
+          )}
         </div>
+
         <div>
           <input
             id="title"

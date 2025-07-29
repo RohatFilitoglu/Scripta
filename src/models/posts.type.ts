@@ -5,8 +5,9 @@ export type newPostPayload = {
   excerpt: string;
   date: string;
   likes?: number;
-  image?: File | null; // Dosya objesi olabilir, veya boş/null
   category: string;
+  image?: File | null; 
+  
 };
 
 export type getAllPostsResponse = {

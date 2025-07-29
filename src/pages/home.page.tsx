@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PostCardList from "../components/PostCardList";
-import Tab from "../components/Tab";
+import CategoryTabs from "../components/Tab";
 
 function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Kategori değiştiğinde currentPage sıfırlanır
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
 
   return (
     <div>
-      <Tab
+      <CategoryTabs
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
-      <PostCardList selectedCategory={selectedCategory} />
+      <PostCardList
+        selectedCategory={selectedCategory}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }

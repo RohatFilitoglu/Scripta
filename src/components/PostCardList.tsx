@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PostCard from "./PostCard";
 import PostThunks from "../store/asyns-thunks/post.thunks";
 import { store } from "../store";
 import usePostStore from "../store/hooks/use-post.hook";
 
-const PostCardList = ({ selectedCategory }: { selectedCategory: string }) => {
-  const { allPosts } = usePostStore();
+type Props = {
+  selectedCategory: string;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+};
 
-  const [currentPage, setCurrentPage] = useState(1);
+const PostCardList = ({ selectedCategory, currentPage, setCurrentPage }: Props) => {
+  const { allPosts } = usePostStore();
   const postsPerPage = 10;
 
   useEffect(() => {
