@@ -30,13 +30,24 @@
   "story-placeholder": "Hikayeni anlat...",
   "select-category": "Kategori seç",
   "select-file": "Select Image",
-    "auth": {
+  "auth": {
     "sign_in": "Giriş Yap",
+    "sign_up": "Kayıt Ol",
+    "create_account": "Başlamak için yeni bir hesap oluştur.",
+    "signup_error": "Kayıt başarısız oldu. Lütfen tekrar deneyin.",
+    "already_account": "Zaten bir hesabın var mı?",
     "welcome_back": "Tekrar hoş geldiniz. Kaldığınız yerden devam edelim.",
     "email": "E-posta adresi",
     "password": "Şifre",
     "forgot_password": "Şifrenizi mi unuttunuz?",
     "reset_here": "Buradan sıfırlayın",
-    "invalid_credentials": "Geçersiz e-posta veya şifre"
-    }
+    "invalid_credentials": "Geçersiz e-posta veya şifre",
+    "no_account": "Hesabın yok mu?",
+    "register_here": "Kayıt Ol",
+    "full_name": "Ad Soyad",
+    "username": "Kullanıcı Adı"
+  },
+  "profile": "Profil",
+  "logout": "Çıkış Yap",
+  "signIn": "Giriş Yap"
 }

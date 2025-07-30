@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 const SignIn = () => {
   const { signIn, session } = useAuth();
   const navigate = useNavigate();
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -79,10 +79,10 @@ const SignIn = () => {
         {error && <p className="text-center text-red-500">{error}</p>}
 
         <p className="text-center text-sm text-gray-500">
-          {t("auth.forgot_password")}{" "}
-          <a href="#" className="text-gray-900 underline cursor-pointer">
-            {t("auth.reset_here")}
-          </a>
+          {t("auth.no_account")}{" "}
+          <Link to="/signup" className="text-gray-900 underline cursor-pointer">
+            {t("auth.register_here")}
+          </Link>
         </p>
       </form>
     </div>

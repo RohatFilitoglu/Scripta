@@ -1,16 +1,11 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import ProfileDropdown from "./ProfileDropdown";
-import { useTranslation } from "react-i18next";
 import { t } from "i18next";
+import LanguageDropdown from "./LanguageDropdown";
 
 const Navbar = () => {
   const { session } = useAuth();
-  const { i18n } = useTranslation();
-
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -42,13 +37,15 @@ const Navbar = () => {
               </svg>
               <input
                 type="text"
-                 placeholder={t('search')}
+                placeholder={t("search")}
                 className="flex-grow bg-transparent ml-2 placeholder-gray-500 focus:outline-none focus:ring-0 text-sm"
               />
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
+            <LanguageDropdown />
+
             {session?.user ? (
               <>
                 <Link
@@ -82,7 +79,7 @@ const Navbar = () => {
                 className="hidden md:inline-flex items-center gap-2 text-sm text-gray-900 px-4 py-2 rounded-full border border-gray-300 cursor-pointer
              hover:text-white hover:bg-black transition-colors duration-200"
               >
-                Sign in
+                {t('signIn')}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-5 h-5 transition-colors duration-200"
@@ -99,18 +96,6 @@ const Navbar = () => {
                 </svg>
               </Link>
             )}
-            <button
-              className="cursor-pointer"
-              onClick={() => changeLanguage("en")}
-            >
-              English
-            </button>
-            <button
-              className="cursor-pointer"
-              onClick={() => changeLanguage("tr")}
-            >
-              Türkçe
-            </button>
           </div>
         </div>
       </div>

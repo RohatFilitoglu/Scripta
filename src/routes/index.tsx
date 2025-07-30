@@ -4,9 +4,11 @@ import PostDetailPage from "../pages/post-detail.page";
 import "../routes/index.css";
 import NewPostPage from "../pages/new-post.page";
 
+// Lazy load edilen sayfalar
 const AppPage = React.lazy(() => import("../App"));
 const HomePage = React.lazy(() => import("../pages/home.page"));
 const SignInPage = React.lazy(() => import("../pages/sign-in.page"));
+const SignUpPage = React.lazy(() => import("../pages/sign-up.page"));
 const UserDetailPage = React.lazy(() => import("../pages/user-detail.page"));
 
 const routes = createBrowserRouter([
@@ -20,7 +22,6 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        path: "/",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <HomePage />
@@ -36,10 +37,18 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/signin",
+        path: "signin", // 🔁 "/signin" değil artık sadece "signin"
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <SignInPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "signup", // ✅ yeni kayıt rotası
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <SignUpPage />
           </Suspense>
         ),
       },
@@ -52,14 +61,13 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/new-post",
+        path: "new-post",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <NewPostPage />
           </Suspense>
         ),
       },
-     
     ],
   },
 ]);
