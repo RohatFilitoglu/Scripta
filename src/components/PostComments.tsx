@@ -3,6 +3,7 @@ import { useAuth } from "../context/useAuth";
 import { store } from "../store";
 import CommentThunks from "../store/asyns-thunks/comment.thunks";
 import useCommentStore from "../store/hooks/use-comment";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   postid: string;
@@ -15,6 +16,9 @@ const PostComments = ({ postid }: Props) => {
   const [content, setContent] = useState("");
   const userid = profile?.id || "";
   const author = profile?.full_name || "";
+
+    const { t } = useTranslation();
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,7 +66,7 @@ const PostComments = ({ postid }: Props) => {
             <textarea
               className="w-full border-none resize-none focus:outline-none text-sm placeholder-gray-500"
               rows={3}
-              placeholder="Yorumunuzu yazın..."
+              placeholder={t('comment')}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               spellCheck={false}
@@ -73,7 +77,7 @@ const PostComments = ({ postid }: Props) => {
                 className="bg-white text-gray-900 border border-gray-900 px-5 py-2 rounded-full text-sm hover:bg-gray-900 hover:text-white font-semibold transition cursor-pointer"
                 disabled={!content.trim()}
               >
-                Gönder
+                {t('send')}
               </button>
             </div>
           </div>
@@ -82,7 +86,7 @@ const PostComments = ({ postid }: Props) => {
 
       <div className="mt-10 space-y-8">
         {comments.length === 0 && (
-          <p className="text-center text-gray-500 italic text-sm">Henüz yorum yok.</p>
+          <p className="text-center text-gray-500 italic text-sm">{t('no-comments')}</p>
         )}
 
         {comments.map((comment) => (

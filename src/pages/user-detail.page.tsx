@@ -7,9 +7,11 @@ import usePostStore from "../store/hooks/use-post.hook";
 import useUserStore from "../store/hooks/use-user.hook";
 import PostCard from "../components/PostCard";
 import UserFavoriteList from "../components/UserFavoriteList";
+import { useTranslation } from "react-i18next";
 
 const UserDetailPage: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
+  const { t } = useTranslation();
 
   const { userPosts } = usePostStore();
   const { userDetail, loading: userLoading } = useUserStore();
@@ -23,15 +25,14 @@ const UserDetailPage: React.FC = () => {
     }
   }, [id]);
 
-
   if (userLoading) {
-    return <div className="text-center py-20">Yükleniyor...</div>;
+    return <div className="text-center py-20">{t("loading")}...</div>;
   }
 
   if (!userDetail) {
     return (
       <div className="text-center py-20 text-red-500">
-        Kullanıcı bilgisi bulunamadı.
+        {t("user-not-found")}
       </div>
     );
   }
@@ -52,7 +53,7 @@ const UserDetailPage: React.FC = () => {
                 : "text-gray-500 hover:text-black"
             }`}
           >
-            Home
+            {t("home")}
           </button>
           <button
             onClick={() => setActiveTab("favorites")}
@@ -62,7 +63,7 @@ const UserDetailPage: React.FC = () => {
                 : "text-gray-500 hover:text-black"
             }`}
           >
-            Favorites
+            {t("favorites")}
           </button>
         </div>
       </div>
@@ -72,9 +73,7 @@ const UserDetailPage: React.FC = () => {
           {userPosts && userPosts.length > 0 ? (
             userPosts.map((post) => <PostCard key={post.id} post={post} />)
           ) : (
-            <p className="text-gray-500">
-              Bu kullanıcı henüz bir yazı yazmamış.
-            </p>
+            <p className="text-gray-500">{t("no-posts")}</p>
           )}
         </div>
       )}

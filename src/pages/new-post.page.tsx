@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import PostThunks from "../store/asyns-thunks/post.thunks";
 import { store } from "../store";
+import { useTranslation } from "react-i18next";
 
 const NewPostPage = () => {
+  const { t } = useTranslation();
   const { profile } = useAuth();
   const [title, setTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
@@ -26,7 +28,7 @@ const NewPostPage = () => {
     e.preventDefault();
 
     if (!imageFile) {
-      alert("Lütfen bir görsel seçin");
+      alert(t("alert-select-image"));
       return;
     }
 
@@ -51,7 +53,7 @@ const NewPostPage = () => {
   return (
     <main className="max-w-4xl mx-auto p-1 bg-white rounded-xl text-gray-900">
       <div className="flex items-center justify-between mb-10 border-b pb-4 border-gray-300">
-        <div className="flex items-center space-x-4 ">
+        <div className="flex items-center space-x-4">
           <Link
             to="/"
             className="text-2xl font-bold text-gray-900"
@@ -61,8 +63,8 @@ const NewPostPage = () => {
           </Link>
 
           <div className="flex items-center space-x-2">
-            <span className="text-sm text-gray-500">Draft</span>
-            <div className="w-40 text-sm font-medium px-3 py-2 placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-transparent rounded">
+            <span className="text-sm text-gray-500">{t("draft")}</span>
+            <div className="w-40 text-sm font-medium px-3 py-2">
               {profile?.full_name}
             </div>
           </div>
@@ -73,17 +75,21 @@ const NewPostPage = () => {
           form="postForm"
           className="w-auto px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full font-semibold text-sm transition disabled:opacity-50"
         >
-          {loading ? "saving..." : "Publish"}
+          {loading ? t("saving") : t("publish")}
         </button>
       </div>
 
       <form id="postForm" onSubmit={handleSubmit} className="space-y-10">
         <div className="flex flex-col">
+          <label htmlFor="image" className="mb-2 font-semibold text-gray-700">
+            {t("upload-image")}
+          </label>
+
           <label
             htmlFor="image"
-            className="mb-2 font-semibold text-gray-700 cursor-pointer"
+            className="cursor-pointer inline-block w-fit px-4 py-2 bg-green-100 text-green-700 rounded-full font-semibold text-sm hover:bg-green-200 transition"
           >
-            Upload Image
+            {t("select-file")}
           </label>
 
           <input
@@ -91,32 +97,21 @@ const NewPostPage = () => {
             type="file"
             accept="image/*"
             onChange={(e) => {
-              if (e.target.files && e.target.files.length > 0) {
-                const file = e.target.files[0];
-                if (!file.type.startsWith("image/")) {
-                  alert("Please select a valid image file.");
-                  e.target.value = "";
-                  setImageFile(null);
-                  return;
-                }
-                setImageFile(file);
-              } else {
+              const file = e.target.files?.[0];
+              if (file && !file.type.startsWith("image/")) {
+                alert(t("invalid-image"));
+                e.target.value = "";
                 setImageFile(null);
+              } else {
+                setImageFile(file || null);
               }
             }}
-            className="block w-full text-sm text-gray-500
-               file:mr-4 file:py-2 file:px-4
-               file:rounded-full file:border-0
-               file:text-sm file:font-semibold
-               file:bg-green-50 file:text-green-700
-               hover:file:bg-green-100
-               cursor-pointer
-              "
+            className="hidden"
           />
 
           {imageFile && (
             <p className="mt-2 text-sm text-gray-700 italic">
-              Selected file:{" "}
+              {t("selected-file")}{" "}
               <span className="font-medium">{imageFile.name}</span>
             </p>
           )}
@@ -128,44 +123,42 @@ const NewPostPage = () => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
+            placeholder={t("title")}
             required
-            className="w-full text-5xl px-6 py-4 rounded-lg placeholder-gray-300 placeholder:font-serif focus:outline-none focus:ring-0 focus:border-transparent"
+            className="w-full text-5xl px-6 py-4 rounded-lg placeholder-gray-300 placeholder:font-serif focus:outline-none"
           />
         </div>
 
         <div>
           <textarea
             id="excerpt"
-            placeholder="Tell your story..."
+            placeholder={t("story-placeholder")}
             value={excerpt}
             onChange={(e) => setExcerpt(e.target.value)}
             required
             rows={6}
-            className="w-full text-xl px-6 py-4 placeholder-gray-400 placeholder:font-serif focus:outline-none focus:ring-0 focus:border-transparent"
+            className="w-full text-xl px-6 py-4 placeholder-gray-400 placeholder:font-serif focus:outline-none"
           />
         </div>
 
         <div>
           <select
-            name="category"
             id="category"
             value={category}
-            onChange={(e) => {
-              setCategory(e.target.value);
-            }}
+            onChange={(e) => setCategory(e.target.value)}
             required
-            className="w-50 text-xl px-6 py-4 placeholder-gray-400 placeholder:font-serif focus:outline-none focus:ring-0 focus:border-transparent"
+            className="w-50 text-xl px-6 py-4"
           >
-            <option value="Technology">Technology</option>
-            <option value="Programming">Programming</option>
-            <option value="Design">Design</option>
-            <option value="Tutorials">Tutorials</option>
-            <option value="Productivity">Productivity</option>
-            <option value="Career">Career</option>
-            <option value="Data Science">Data Science</option>
-            <option value="Startups">Startups</option>
-            <option value="Life & Thoughts">Life & Thoughts</option>
+            <option value="">{t("select-category")}</option>
+            <option value="Technology">{t("technology")}</option>
+            <option value="Programming">{t("programming")}</option>
+            <option value="Design">{t("design")}</option>
+            <option value="Tutorials">{t("tutorials")}</option>
+            <option value="Productivity">{t("productivity")}</option>
+            <option value="Career">{t("career")}</option>
+            <option value="Data Science">{t("dataScience")}</option>
+            <option value="Startups">{t("startups")}</option>
+            <option value="Life & Thoughts">{t("lifeThoughts")}</option>
           </select>
         </div>
       </form>

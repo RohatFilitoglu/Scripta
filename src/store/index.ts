@@ -7,7 +7,7 @@ import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux
 import { reducer as postReducer } from "./slice/post.slice";
 import { reducer as commentReducer } from "./slice/comment.slice";
 import { reducer as favoriteReducer } from "./slice/favorite.slice";
-import { reducer as userReducer } from "./slice/user.slice"; 
+import { reducer as userReducer } from "./slice/user.slice";
 
 const persistConfig = {
   key: "root",

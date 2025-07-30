@@ -19,7 +19,7 @@ export type getAllPostsResponse = {
   category: string;
   date: string;
   userId: string;
-  likes?: number;
+  likesCount: number;
   created_at: string;
 }[];
 

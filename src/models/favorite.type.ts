@@ -12,7 +12,7 @@ export type getFavoriteResponse = {
   userId: string;
   postId: string;
   created_at: string;
-  post: PostType;
+  post?: PostType;
 };
 
 export type AddFavoritePayload = {

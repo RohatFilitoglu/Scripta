@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import ProfileDropdown from "./ProfileDropdown";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 const Navbar = () => {
   const { session } = useAuth();
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -35,7 +42,7 @@ const Navbar = () => {
               </svg>
               <input
                 type="text"
-                placeholder="Search stories"
+                 placeholder={t('search')}
                 className="flex-grow bg-transparent ml-2 placeholder-gray-500 focus:outline-none focus:ring-0 text-sm"
               />
             </div>
@@ -65,7 +72,7 @@ const Navbar = () => {
                       d="M17.447 8.08a1.087 1.087 0 0 1 1.187.238 1.088 1.088 0 0 1 0 1.539l-.377.377-1.54-1.542.373-.374a1.08 1.08 0 0 1 .357-.238Zm-2.143 2.027-4.644 4.644-.385 1.924 1.925-.385 4.644-4.642-1.54-1.54Zm2.56-4.11a3.087 3.087 0 0 0-2.187.909l-6.645 6.645a1 1 0 0 0-.274.51l-.739 3.693a1 1 0 0 0 1.177 1.176l3.693-.738a1 1 0 0 0 .51-.274l6.65-6.646a3.088 3.088 0 0 0-2.185-5.275Z"
                     />
                   </svg>
-                  Write
+                  {t("write")}
                 </Link>
                 <ProfileDropdown />
               </>
@@ -92,6 +99,18 @@ const Navbar = () => {
                 </svg>
               </Link>
             )}
+            <button
+              className="cursor-pointer"
+              onClick={() => changeLanguage("en")}
+            >
+              English
+            </button>
+            <button
+              className="cursor-pointer"
+              onClick={() => changeLanguage("tr")}
+            >
+              Türkçe
+            </button>
           </div>
         </div>
       </div>

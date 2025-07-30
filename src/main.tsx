@@ -4,6 +4,7 @@ import routes from "./routes";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { AuthProvider } from "./context/AuthProvider";
+import "./i18n";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
