@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import PostDetailPage from "../pages/post-detail.page";
 import "../routes/index.css";
 import NewPostPage from "../pages/new-post.page";
+import SearchPage from "../pages/search.page"; // SearchPage'i import et
 
 // Lazy load edilen sayfalar
 const AppPage = React.lazy(() => import("../App"));
@@ -37,7 +38,7 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "signin", // 🔁 "/signin" değil artık sadece "signin"
+        path: "signin",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <SignInPage />
@@ -45,7 +46,7 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "signup", // ✅ yeni kayıt rotası
+        path: "signup",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <SignUpPage />
@@ -65,6 +66,14 @@ const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <NewPostPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "search", // Buraya SearchPage route'u ekledik
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <SearchPage />
           </Suspense>
         ),
       },

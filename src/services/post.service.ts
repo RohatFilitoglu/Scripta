@@ -24,6 +24,9 @@ const PostService = {
     http.put(`/posts/${id}`, post),
 
   deletePost: (id: string) => http.delete<{ message: string }>(`/posts/${id}`),
+
+  getSearchPost: (search: string) =>
+    http.get<getAllPostsResponse>(`/posts/search?query=${search}`),
 };
 
 export default PostService;

@@ -35,10 +35,15 @@
     "sign_up": "Sign Up",
     "create_account": "Create a new account to get started.",
     "signup_error": "Sign up failed. Please try again.",
+    "signup_failed": "Signup failed",
     "already_account": "Already have an account?",
+    "have_account": "Already have an account?",
+    "login_here": "Login here",
     "welcome_back": "Welcome back. Let's continue where you left off.",
     "email": "Email address",
     "password": "Password",
+    "confirm_password": "Confirm password",
+    "passwords_do_not_match": "Passwords do not match",
     "forgot_password": "Forgot your password?",
     "reset_here": "Reset here",
     "invalid_credentials": "Invalid email or password",
@@ -49,5 +54,7 @@
   },
   "profile": "Profile",
   "logout": "Log Out",
-  "signIn": "Sign In"
+  "signIn": "Sign In",
+   "searchResultsFor": "Search results for:",
+  "searchResultsInfo": "Contents matching the search term are listed below."
 }

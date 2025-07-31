@@ -1,11 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import ProfileDropdown from "./ProfileDropdown";
 import { t } from "i18next";
 import LanguageDropdown from "./LanguageDropdown";
+import { useEffect, useState } from "react";
+import { store } from "../store";
+import PostThunks from "../store/asyns-thunks/post.thunks";
+import usePostStore from "../store/hooks/use-post.hook";
 
 const Navbar = () => {
   const { session } = useAuth();
+  const [searchValue, setSearchValue] = useState("");
+  const { searchPosts } = usePostStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!searchValue) return;
+    store.dispatch(PostThunks.getSearchPost(searchValue));
+  }, [searchValue]);
+
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -19,27 +33,110 @@ const Navbar = () => {
             >
               Scripta
             </Link>
-
-            <div className="hidden md:flex items-center w-64 bg-gray-100 rounded-full px-3 py-1.5">
-              <svg
-                className="w-5 h-5 text-gray-500"
-                aria-hidden="true"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+            <div className="relative">
+              <div className="hidden md:flex items-center w-64 bg-gray-100 rounded-full px-3 py-1.5">
+                <svg
+                  className="w-5 h-5 text-gray-500"
+                  aria-hidden="true"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  placeholder={t("search")}
+                  className="flex-grow bg-transparent ml-2 placeholder-gray-500 focus:outline-none focus:ring-0 text-sm"
+                  value={searchValue}
+                  onChange={(e) => {
+                    setSearchValue(e.target.value);
+                  }}
                 />
-              </svg>
-              <input
-                type="text"
-                placeholder={t("search")}
-                className="flex-grow bg-transparent ml-2 placeholder-gray-500 focus:outline-none focus:ring-0 text-sm"
-              />
+              </div>
+              {searchValue &&
+                searchValue !== "" &&
+                (searchPosts?.length ? (
+                  <div className="absolute top-10 left-0 bg-white shadow-xl rounded-lg p-2 w-full max-w-md z-10">
+                    <div className="overflow-y-auto max-h-80 divide-y divide-gray-300">
+                      {searchPosts.map((post) => (
+                        <div
+                          key={post.id}
+                          className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded transition"
+                          role="listitem"
+                        >
+                          <div className="flex-shrink-0">
+                            <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex items-center justify-center">
+                              {post.image ? (
+                                <img
+                                  src={`${supabaseUrl}/storage/v1/object/public/post-images/${post.image}`}
+                                  alt={post.title || "Post görseli"}
+                                  className="w-full h-full object-cover"
+                                  loading="lazy"
+                                  onError={(e) => {
+                                    (e.currentTarget as HTMLImageElement).src =
+                                      "/placeholder-image.png";
+                                  }}
+                                />
+                              ) : (
+                                <div className="text-xs text-gray-400">
+                                  Görsel yok
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex flex-col flex-grow min-w-0 gap-1">
+                            <div className="font-medium truncate">
+                              {post.title}
+                            </div>
+                            <div className="text-gray-500 text-xs flex items-center gap-1">
+                              <span className="truncate">{post.author}</span>
+                              {post.created_at && (
+                                <span className="before:content-['·'] before:mx-1">
+                                  {new Date(post.created_at).toLocaleDateString(
+                                    "tr-TR",
+                                    {
+                                      day: "2-digit",
+                                      month: "2-digit",
+                                      year: "numeric",
+                                    }
+                                  )}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-2 text-center">
+                      <button
+                        onClick={() => {
+                          const trimmed = searchValue.trim();
+                          if (trimmed) {
+                            navigate(
+                              `/search?query=${encodeURIComponent(trimmed)}`
+                            );
+                            setSearchValue(""); // Dropdown'ı kapatmak için arama değerini sıfırla
+                          }
+                        }}
+                        className="text-sm w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition"
+                      >
+                        Tüm arama sonuçlarını gör
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="absolute top-10 left-0 bg-white border rounded-lg p-4">
+                    <div className="text-sm text-gray-600">
+                      Aramaya uygun veri bulunamadı
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
 
@@ -71,6 +168,7 @@ const Navbar = () => {
                   </svg>
                   {t("write")}
                 </Link>
+
                 <ProfileDropdown />
               </>
             ) : (
@@ -79,21 +177,8 @@ const Navbar = () => {
                 className="hidden md:inline-flex items-center gap-2 text-sm text-gray-900 px-4 py-2 rounded-full border border-gray-300 cursor-pointer
              hover:text-white hover:bg-black transition-colors duration-200"
               >
-                {t('signIn')}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 transition-colors duration-200"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                  <polyline points="10 17 15 12 10 7" />
-                  <line x1="15" y1="12" x2="3" y2="12" />
-                </svg>
+                {t("signIn")}
+                {/* SVG ikonu */}
               </Link>
             )}
           </div>

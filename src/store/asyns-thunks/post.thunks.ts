@@ -45,7 +45,7 @@ const deletePost = createAsyncThunk<{ message: string }, string>(
   "post/deletePost",
   async (postId, thunkAPI) => {
     try {
-      const { data } = await PostService.deletePost(postId); 
+      const { data } = await PostService.deletePost(postId);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -65,6 +65,17 @@ const getPostsByUser = createAsyncThunk<getAllPostsResponse, string>(
   }
 );
 
+const getSearchPost = createAsyncThunk<getAllPostsResponse, string>(
+  "post/getSearchPost",
+  async (search, thunkAPI) => {
+    try {
+      const { data } = await PostService.getSearchPost(search);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const PostThunks = {
   getAllPosts,
@@ -72,7 +83,7 @@ const PostThunks = {
   newPost,
   deletePost,
   getPostsByUser,
+  getSearchPost,
 };
 
 export default PostThunks;
-

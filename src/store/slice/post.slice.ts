@@ -10,6 +10,7 @@ type PostState = {
   allPosts: getAllPostsResponse | undefined;
   selectedPost: getPostResponse | undefined;
   userPosts: getAllPostsResponse | undefined;
+  searchPosts: getAllPostsResponse | undefined;
   loading: boolean;
 };
 
@@ -17,6 +18,7 @@ const initialState: PostState = {
   allPosts: undefined,
   selectedPost: undefined,
   userPosts: undefined,
+  searchPosts: undefined,
   loading: false,
 };
 
@@ -57,26 +59,33 @@ const postSlice = createSlice({
     builder.addCase(PostThunks.getPostsByUser.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(PostThunks.getPostsByUser.fulfilled, (state, { payload }) => {
-      state.userPosts = payload;
-      state.loading = false;
-    });
+    builder.addCase(
+      PostThunks.getPostsByUser.fulfilled,
+      (state, { payload }) => {
+        state.userPosts = payload;
+        state.loading = false;
+      }
+    );
     builder.addCase(PostThunks.getPostsByUser.rejected, (state) => {
       state.loading = false;
     });
-  }
+    builder.addCase(
+      PostThunks.getSearchPost.fulfilled,
+      (state, { payload }) => {
+        state.searchPosts = payload;
+      }
+    );
+  },
 });
-
-
 
 export const actions = postSlice.actions;
 export const reducer = postSlice.reducer;
 export const { reset, clearSelectedPost } = postSlice.actions;
 
-
 export const select = {
   getAllPosts: (state: RootState) => state.postStore.allPosts,
   getSelectedPost: (state: RootState) => state.postStore.selectedPost,
   getUserPosts: (state: RootState) => state.postStore.userPosts,
- getLoading: (state: RootState) => state.postStore.loading,
+  getLoading: (state: RootState) => state.postStore.loading,
+  getSearchPosts: (state: RootState) => state.postStore.searchPosts,
 };
