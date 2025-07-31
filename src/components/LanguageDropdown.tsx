@@ -35,7 +35,7 @@ const LanguageDropdown = () => {
 
   const changeLanguage = (code: string) => {
     if (code !== currentLanguage) {
-      i18n.changeLanguage(code); // ✅ i18n dilini değiştir
+      i18n.changeLanguage(code);
       setCurrentLanguage(code);
     }
     setIsOpen(false);

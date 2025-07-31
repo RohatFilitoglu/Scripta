@@ -60,9 +60,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
-    if (error) throw error;
-  };
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) {
+    console.error("SignUp error:", error.message);
+    throw error;
+  }
+
+  if (!data.user) {
+    // Email confirmation zorunluluğu varsa buraya düşer
+    throw new Error("E-posta doğrulama gerekli. Lütfen e-postanı kontrol et.");
+  }
+
+  // Gerekirse burada profile ekleme işlemi yapılabilir
+};
+
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
