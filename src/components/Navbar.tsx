@@ -3,7 +3,7 @@ import { useAuth } from "../context/useAuth";
 import ProfileDropdown from "./ProfileDropdown";
 import { t } from "i18next";
 import LanguageDropdown from "./LanguageDropdown";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { store } from "../store";
 import PostThunks from "../store/asyns-thunks/post.thunks";
 import usePostStore from "../store/hooks/use-post.hook";
@@ -13,13 +13,38 @@ const Navbar = () => {
   const [searchValue, setSearchValue] = useState("");
   const { searchPosts } = usePostStore();
   const navigate = useNavigate();
+  const debounceRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!searchValue) return;
-    store.dispatch(PostThunks.getSearchPost(searchValue));
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    if (!searchValue.trim()) return;
+
+    debounceRef.current = window.setTimeout(() => {
+      store.dispatch(PostThunks.getSearchPost(searchValue.trim()));
+    }, 300);
+
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
   }, [searchValue]);
 
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+
+  const handleViewAll = () => {
+    const trimmed = searchValue.trim();
+    if (!trimmed) return;
+    navigate(`/search/${encodeURIComponent(trimmed)}`);
+    setSearchValue("");
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleViewAll();
+    }
+  };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -52,15 +77,17 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder={t("search")}
+                  aria-label={t("search")}
                   className="flex-grow bg-transparent ml-2 placeholder-gray-500 focus:outline-none focus:ring-0 text-sm"
                   value={searchValue}
                   onChange={(e) => {
                     setSearchValue(e.target.value);
                   }}
+                  onKeyDown={onKeyDown}
                 />
               </div>
               {searchValue &&
-                searchValue !== "" &&
+                searchValue.trim() !== "" &&
                 (searchPosts?.length ? (
                   <div className="absolute top-10 left-0 bg-white shadow-xl rounded-lg p-2 w-full max-w-md z-10">
                     <div className="overflow-y-auto max-h-80 divide-y divide-gray-300">
@@ -115,16 +142,20 @@ const Navbar = () => {
                     </div>
                     <div className="mt-2 text-center">
                       <button
-                        onClick={() => {
-                          const trimmed = searchValue.trim();
-                          if (trimmed) {
-                            navigate(
-                              `/search?query=${encodeURIComponent(trimmed)}`
-                            );
-                            setSearchValue(""); // Dropdown'ı kapatmak için arama değerini sıfırla
-                          }
-                        }}
-                        className="text-sm w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition"
+                        type="button"
+                        onClick={handleViewAll}
+                        disabled={!searchValue.trim()}
+                        aria-label={
+                          searchValue.trim()
+                            ? `Tüm sonuçları göster: ${searchValue.trim()}`
+                            : "Arama terimi yok"
+                        }
+                        className={
+                          "text-sm w-full py-2 rounded-md transition focus-visible:outline-none focus-visible:ring-2 " +
+                          (searchValue.trim()
+                            ? "bg-indigo-600 text-white hover:bg-indigo-700 focus-visible:ring-indigo-500"
+                            : "bg-gray-100 text-gray-400 cursor-not-allowed")
+                        }
                       >
                         Tüm arama sonuçlarını gör
                       </button>
@@ -174,11 +205,24 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/signin"
-                className="hidden md:inline-flex items-center gap-2 text-sm text-gray-900 px-4 py-2 rounded-full border border-gray-300 cursor-pointer
-             hover:text-white hover:bg-black transition-colors duration-200"
+                className="hidden md:inline-flex items-center gap-2 text-sm text-gray-900 px-4 py-2 rounded-full border border-gray-300 cursor-pointer hover:text-white hover:bg-black transition-colors duration-200 font-medium"
               >
                 {t("signIn")}
-                {/* SVG ikonu */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                  <polyline points="10 17 15 12 10 7" />
+                  <line x1="15" y1="12" x2="3" y2="12" />
+                </svg>
               </Link>
             )}
           </div>

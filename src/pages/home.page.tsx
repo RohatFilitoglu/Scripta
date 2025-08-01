@@ -6,7 +6,6 @@ function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Kategori değiştiğinde currentPage sıfırlanır
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategory]);

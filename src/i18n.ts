@@ -6,14 +6,14 @@ import en from "./locales/en/translation.json";
 import tr from "./locales/tr/translation.json";
 
 i18n
-  .use(LanguageDetector) // otomatik dil algılama
-  .use(initReactI18next) // react entegrasyonu
+  .use(LanguageDetector) 
+  .use(initReactI18next)
   .init({
-    fallbackLng: "tr", // desteklenmeyen dil seçilirse fallback
-    debug: true, // dev ortamı için debug
+    fallbackLng: "tr", 
+    debug: true, 
 
     interpolation: {
-      escapeValue: false, // React zaten XSS koruması sağlıyor
+      escapeValue: false, 
     },
 
     resources: {

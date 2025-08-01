@@ -50,7 +50,6 @@ export default function ProfileDropdown() {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* Profile Avatar */}
       <motion.div
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -63,16 +62,13 @@ export default function ProfileDropdown() {
             alt="Profile"
             className="w-8 h-8 md:w-9 md:h-9 rounded-full object-cover border-2 border-transparent hover:border-gray-200 transition-all duration-200"
           />
-          {/* Online Status Indicator */}
           <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
         </div>
       </motion.div>
 
-      {/* Dropdown Menu */}
       <AnimatePresence>
         {open && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -81,7 +77,6 @@ export default function ProfileDropdown() {
               onClick={() => setOpen(false)}
             />
             
-            {/* Dropdown */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: -10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -94,7 +89,6 @@ export default function ProfileDropdown() {
               }}
               className="absolute right-0 mt-3 w-56 bg-white/95 backdrop-blur-md border border-gray-200/60 rounded-2xl shadow-xl shadow-black/5 z-50 overflow-hidden"
             >
-              {/* Header */}
               <div className="px-4 py-3 border-b border-gray-100">
                 <div className="flex items-center space-x-3">
                   <img
@@ -113,7 +107,6 @@ export default function ProfileDropdown() {
                 </div>
               </div>
 
-              {/* Menu Items */}
               <div className="py-2">
                 {menuItems.map((item, index) => (
                   <motion.div
@@ -134,10 +127,8 @@ export default function ProfileDropdown() {
                 ))}
               </div>
 
-              {/* Divider */}
               <div className="border-t border-gray-100 mx-2"></div>
 
-              {/* Logout */}
               <div className="py-2">
                 <motion.div
                   whileHover={{ backgroundColor: "rgba(239, 68, 68, 0.05)" }}

@@ -3,9 +3,8 @@ import { createBrowserRouter } from "react-router-dom";
 import PostDetailPage from "../pages/post-detail.page";
 import "../routes/index.css";
 import NewPostPage from "../pages/new-post.page";
-import SearchPage from "../pages/search.page"; // SearchPage'i import et
+import SearchPage from "../pages/search.page";
 
-// Lazy load edilen sayfalar
 const AppPage = React.lazy(() => import("../App"));
 const HomePage = React.lazy(() => import("../pages/home.page"));
 const SignInPage = React.lazy(() => import("../pages/sign-in.page"));
@@ -70,7 +69,7 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: "search", // Buraya SearchPage route'u ekledik
+        path: "search/:search",
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <SearchPage />

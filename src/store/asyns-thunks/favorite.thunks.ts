@@ -31,8 +31,8 @@ const addFavorite = createAsyncThunk<Favorite, AddFavoritePayload>(
 );
 
 const deleteFavorite = createAsyncThunk<
-  { message: string }, // Dönen veri türü
-  DeleteFavoritePayload // Alınan parametre
+  { message: string }, 
+  DeleteFavoritePayload 
 >("favorite/deleteFavorite", async (payload, thunkAPI) => {
   try {
     const { data } = await FavoriteService.deleteFavorite(payload);

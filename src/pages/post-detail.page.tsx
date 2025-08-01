@@ -18,26 +18,23 @@ const PostDetailPage = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
-  const [loading, setLoading] = useState(true); // ✅ local loading
+  const [loading, setLoading] = useState(true); 
 
-  // ✅ id değiştiğinde önce eski postu sil, sonra yeni postu getir
   useEffect(() => {
     if (id) {
-      store.dispatch(clearSelectedPost()); // önce temizle
+      store.dispatch(clearSelectedPost()); 
       setLoading(true);
       store.dispatch(PostThunks.getPostById(id))
         .finally(() => setLoading(false));
     }
   }, [id]);
 
-  // ✅ Sayfa kapandığında temizle
   useEffect(() => {
     return () => {
       store.dispatch(clearSelectedPost());
     };
   }, []);
 
-  // ✅ Dropdown dışına tıklanınca kapat
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (
@@ -70,7 +67,6 @@ const PostDetailPage = () => {
     setConfirmModalOpen(false);
   };
 
-  // ✅ Yükleme ekranı
   if (loading || !selectedPost) {
     return <div className="text-center py-12 text-gray-500">Yükleniyor...</div>;
   }
@@ -140,7 +136,6 @@ const PostDetailPage = () => {
 
       <PostComments postid={selectedPost.id} />
 
-      {/* Minimalist modal kutusu */}
       {confirmModalOpen && (
       <div
   className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg p-6 shadow-lg z-50 w-96 max-w-full border border-gray-200 text-center"
@@ -148,7 +143,6 @@ const PostDetailPage = () => {
   aria-modal="true"
   aria-labelledby="modal-title"
 >
-  {/* Close button (top-right corner) */}
   <button
     type="button"
     onClick={cancelDelete}
@@ -170,7 +164,6 @@ const PostDetailPage = () => {
     </svg>
   </button>
 
-  {/* Trash icon */}
   <svg
     className="mx-auto mb-4 w-12 h-12 text-gray-400"
     fill="currentColor"
