@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "scripta-backend-7bznrk0c7-rohat-filitoglus-projects.vercel.app"
+    }
+  ]
+}
