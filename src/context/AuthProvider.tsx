@@ -59,25 +59,46 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (error) throw error;
   };
 
-  const signUp = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-  });
+  const signUp = async (
+    email: string,
+    password: string,
+    username: string,
+    full_name: string,
+    avatar_url: string
+  ) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-  if (error) {
-    console.error("SignUp error:", error.message);
-    throw error;
-  }
+    if (error) {
+      console.error("SignUp error:", error.message);
+      throw error;
+    }
 
-  if (!data.user) {
-    // Email confirmation zorunluluğu varsa buraya düşer
-    throw new Error("E-posta doğrulama gerekli. Lütfen e-postanı kontrol et.");
-  }
+    const user = data.user;
 
-  // Gerekirse burada profile ekleme işlemi yapılabilir
-};
+    if (!user) {
+      throw new Error(
+        "E-posta doğrulama gerekli. Lütfen e-postanı kontrol et."
+      );
+    }
 
+    
+    const { error: profileError } = await supabase.from("profiles").insert([
+      {
+        id: user.id,
+        username,
+        full_name,
+        avatar_url,
+      },
+    ]);
+
+    if (profileError) {
+      console.error("Profil eklenemedi:", profileError.message);
+      throw profileError;
+    }
+  };
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();

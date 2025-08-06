@@ -11,6 +11,9 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [full_name, setFull_name] = useState("");
+  const [avatar_url, setAvatar_url] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,7 +25,7 @@ const SignUp = () => {
     }
 
     try {
-      await signUp(email, password);
+      await signUp(email, password, username, full_name, avatar_url);
       navigate("/");
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -61,6 +64,30 @@ const SignUp = () => {
         <p className="text-center text-gray-500 italic">
           {t("auth.create_account")}
         </p>
+
+        <input
+          type="text"
+          value={full_name}
+          placeholder={t("auth.full_name")}
+          onChange={(e) => setFull_name(e.target.value)}
+          className="w-full border-b border-gray-300 py-3 px-2 text-lg focus:outline-none focus:border-gray-900 transition-colors duration-300"
+        />
+
+        <input
+          type="text"
+          value={username}
+          placeholder={t("auth.username")}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full border-b border-gray-300 py-3 px-2 text-lg focus:outline-none focus:border-gray-900 transition-colors duration-300"
+        />
+
+        <input
+          type="file"
+          value={avatar_url}
+          placeholder={t("auth.avatar_url") || "Avatar URL"}
+          onChange={(e) => setAvatar_url(e.target.value)}
+          className="w-full border-b border-gray-300 py-3 px-2 text-lg focus:outline-none focus:border-gray-900 transition-colors duration-300"
+        />
 
         <input
           type="email"

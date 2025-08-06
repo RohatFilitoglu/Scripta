@@ -50,7 +50,8 @@
     "no_account": "Hesabın yok mu?",
     "register_here": "Buradan Kayıt Ol",
     "full_name": "Ad Soyad",
-    "username": "Kullanıcı Adı"
+    "username": "Kullanıcı Adı",
+    "avatar_url": "Profil Resmi"
   },
   "profile": "Profil",
   "logout": "Çıkış Yap",

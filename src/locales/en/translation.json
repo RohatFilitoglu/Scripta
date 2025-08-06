@@ -50,7 +50,8 @@
     "no_account": "Don't have an account?",
     "register_here": "Register Here",
     "full_name": "Full Name",
-    "username": "Username"
+    "username": "Username",
+    "avatar_url": "Profile Picture"
   },
   "profile": "Profile",
   "logout": "Log Out",
