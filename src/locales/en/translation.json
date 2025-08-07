@@ -51,11 +51,15 @@
     "register_here": "Register Here",
     "full_name": "Full Name",
     "username": "Username",
-    "avatar_url": "Profile Picture"
+    "avatar_url": "Profile Picture",
+    "check_email_title": "Check your email",
+    "check_email_description": "To complete your registration, please confirm the verification link sent to your email.",
+    "ok_button": "OK",
+    "check_spam_hint": "If you can't find the email, check your spam folder"
   },
   "profile": "Profile",
   "logout": "Log Out",
   "signIn": "Sign In",
-   "searchResultsFor": "Search results for:",
+  "searchResultsFor": "Search results for:",
   "searchResultsInfo": "Contents matching the search term are listed below."
 }

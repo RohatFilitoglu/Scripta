@@ -51,7 +51,11 @@
     "register_here": "Buradan Kayıt Ol",
     "full_name": "Ad Soyad",
     "username": "Kullanıcı Adı",
-    "avatar_url": "Profil Resmi"
+    "avatar_url": "Profil Resmi",
+    "check_email_title": "E-postanı kontrol et",
+    "check_email_description": "Kaydını tamamlamak için e-posta adresine gönderilen doğrulama bağlantısını onayla.",
+    "ok_button": "Tamam",
+    "check_spam_hint": "E-postayı bulamıyorsan spam klasörünü kontrol et"
   },
   "profile": "Profil",
   "logout": "Çıkış Yap",

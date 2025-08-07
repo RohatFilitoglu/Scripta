@@ -16,6 +16,8 @@ const SignUp = () => {
   const [avatar_url, setAvatar_url] = useState("");
   const [error, setError] = useState("");
 
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -26,7 +28,7 @@ const SignUp = () => {
 
     try {
       await signUp(email, password, username, full_name, avatar_url);
-      navigate("/");
+      setShowVerificationModal(true);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -132,6 +134,69 @@ const SignUp = () => {
           </Link>
         </p>
       </form>
+      {showVerificationModal && (
+        <div className="fixed inset-0 backdrop-blur-xs bg-black/20 flex justify-center items-center z-50 p-4">
+          <div className="bg-white/95  border border-gray-200/50 p-8 rounded-2xl shadow-2xl max-w-md w-full text-center relative overflow-hidden">
+            <div className="absolute inset-0  rounded-2xl"></div>
+
+            <div className="relative z-10">
+              <div className="mx-auto w-16 h-16 bg-gradient-to-br from-red-700 to-yellow-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-8 h-8 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0L12 13.5 2.25 6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25"
+                  />
+                </svg>
+              </div>
+
+              <h2 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">
+                {t("auth.check_email_title")}
+              </h2>
+
+              <p className="text-gray-600 leading-relaxed mb-8 text-sm">
+                {t("auth.check_email_description")}
+              </p>
+
+              <div className="flex items-center justify-center gap-2 text-emerald-600 mb-6">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span className="text-sm font-medium">E-posta gönderildi</span>
+              </div>
+
+              <button
+                onClick={() => navigate("/")}
+                className="w-full px-6 py-3 bg-gradient-to-r from-gray-900 to-gray-800 text-white font-medium rounded-xl hover:from-gray-800 hover:to-gray-700 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+              >
+                {t("auth.ok_button")}
+              </button>
+
+              <p className="text-xs text-gray-400 mt-4">
+                {t("auth.check_spam_hint")}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
