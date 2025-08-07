@@ -94,8 +94,9 @@ const Navbar = () => {
                       {searchPosts.map((post) => (
                         <div
                           key={post.id}
-                          className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded transition"
                           role="listitem"
+                          onClick={() => navigate(`/post/${post.id}`)}
+                          className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded transition"
                         >
                           <div className="flex-shrink-0">
                             <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex items-center justify-center">
